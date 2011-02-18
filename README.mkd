@@ -1,0 +1,5 @@
+
+taglist.vim 中文文档
+====================
+
+这是一份针对 [taglist.vim](http://vim-taglist.sourceforge.net/) v4.5 文档的中文翻译。
