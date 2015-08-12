@@ -70,60 +70,60 @@ Taglist 的主页在:
 <
 ==============================================================================
 						*taglist-requirements*
-3. Requirements~
+3. 须求~
 
-The taglist plugin requires the following:
+这个 taglist 插件需要以下组件:
 
-    * Vim version 6.0 and above
-    * Exuberant ctags 5.0 and above
+    * Vim 6.0 或 更高级版本
+    * Exuberant ctags 5.0 或 更高级版本
 
-The taglist plugin will work on all the platforms where the exuberant ctags
-utility and Vim are supported (this includes MS-Windows and Unix based
-systems).
+这个 taglist 插件可以在所有系统平台工作,只要系统平台的有 exuberant ctags
+utility 和 Vim 支持 (这里包括 MS-Windows 和 基于 Unix
+的操作系统平台).
 
-The taglist plugin relies on the exuberant ctags utility to dynamically
-generate the tag listing.  The exuberant ctags utility must be installed in
-your system to use this plugin.  The exuberant ctags utility is shipped with
-most of the Linux distributions.  You can download the exuberant ctags utility
-from
+这个 taglist 插件依赖 exuberant ctags 工具动态
+生成的 tag 列表.   exuberant ctags 必须安装到
+你的系统里，如果你想使用这个插件.  exuberant ctags 工具 随
+大多数的 Linux 发行版一起发布.  你也可下载 exuberant ctags 工具
+从:
 >
 	http://ctags.sourceforge.net
 <
-The taglist plugin doesn't use or create a tags file and there is no need to
-create a tags file to use this plugin. The taglist plugin will not work with
-the GNU ctags or the Unix ctags utility.
+这个 taglist 插件不用建立 tags 文件 也没必要
+建立一个 tags 文件来使用这个插件. 这个 taglist 插件不能正常工作如果没有
+ GNU ctags 或  Unix ctags 工作.
 
-This plugin relies on the Vim "filetype" detection mechanism to determine the
-type of the current file. You have to turn on the Vim filetype detection by
-adding the following line to your .vimrc file:
+这个插件依赖于 Vim 的 "filetype" 检测机能 去检测 
+当前文件的类型. 你必须打开 Vim 文件检测机能，通过 
+添加以下文本行到你的 .vimrc 文件:
 >
 	filetype on
 <
-The taglist plugin will not work if you run Vim in the restricted mode (using
-the -Z command-line argument).
+这个 taglist 插件 不能正常工作台，如果你打开了 Vim 严格模式 (使用了
+ -Z 命令行参数).
 
-The taglist plugin uses the Vim system() function to invoke the exuberant
-ctags utility. If Vim is compiled without the system() function then you
-cannot use the taglist plugin. Some of the Linux distributions (Suse) compile
-Vim without the system() function for security reasons.
+这个 taglist 插件 使用了 Vim system() 函数 协同 exuberant
+ctags 工具荼. 如果 Vim 编译时没有 system() 函数那么你就
+没法用 taglist 插件.一些 Linux 发行版 (如Suse) 编译的
+Vim 是没有 system() 函数，这是基于安全原因.
 
 ==============================================================================
 						*taglist-install*
-4. Installation~
+4. 安装~
 
-1. Download the taglist.zip file and unzip the files to the $HOME/.vim or the
-   $HOME/vimfiles or the $VIM/vimfiles directory. After this step, you should
-   have the following two files (the directory structure should be preserved):
+1. 下载 taglist.zip 文件和解压这个 files 到 $HOME/.vim 或者
+   $HOME/vimfiles 或者 $VIM/vimfiles 目录. 完成这个步骤后,你会
+   以下两个文件 (目录结构要维持原样):
 
-	plugin/taglist.vim - main taglist plugin file
-	doc/taglist.txt    - documentation (help) file
+	plugin/taglist.vim - taglist 插件的主文件 
+	doc/taglist.txt    - 文档 (帮助) 文件
 
-   Refer to the |add-plugin|and |'runtimepath'| Vim help pages for more
-   details about installing Vim plugins.
-2. Change to the $HOME/.vim/doc or $HOME/vimfiles/doc or $VIM/vimfiles/doc
-   directory, start Vim and run the ":helptags ." command to process the
-   taglist help file. Without this step, you cannot jump to the taglist help
-   topics.
+   通过参考 |add-plugin|和 |'runtimepath'| Vim 帮助页面得到更多
+   关于安装 Vim 插件的细节.
+2. 切换到 $HOME/.vim/doc 或者 $HOME/vimfiles/doc 或者 $VIM/vimfiles/doc
+   目录, 打开 Vim 和运行 ":helptags ." 命令生成
+   taglist 帮助文件的 tag. 没有这个步骤,你是不能跳转到 taglist 帮助文件
+   标题.
 3. If the exuberant ctags utility is not present in one of the directories in
    the PATH environment variable, then set the 'Tlist_Ctags_Cmd' variable to
    point to the location of the exuberant ctags utility (not to the directory)
@@ -134,16 +134,16 @@ Vim without the system() function for security reasons.
 5. Restart Vim.
 6. You can now use the ":TlistToggle" command to open/close the taglist
    window. You can use the ":help taglist" command to get more information
-   about using the taglist plugin.
+   about using the taglist 插件.
 
-To uninstall the taglist plugin, remove the plugin/taglist.vim and
+To uninstall the taglist 插件, remove the plugin/taglist.vim and
 doc/taglist.txt files from the $HOME/.vim or $HOME/vimfiles directory.
 
 ==============================================================================
 						*taglist-using*
 5. Usage~
 
-The taglist plugin can be used in several different ways.
+The taglist 插件 can be used in several different ways.
 
 1. You can keep the taglist window open during the entire editing session. On
    opening the taglist window, the tags defined in all the files in the Vim
@@ -152,27 +152,27 @@ The taglist plugin can be used in several different ways.
    tag from the taglist window and jump to it. The current tag will be
    highlighted in the taglist window. You can close the taglist window when
    you no longer need the window.
-2. You can configure the taglist plugin to process the tags defined in all the
+2. You can configure the taglist 插件 to process the tags defined in all the
    edited files always. In this configuration, even if the taglist window is
-   closed and the taglist menu is not displayed, the taglist plugin will
+   closed and the taglist menu is not displayed, the taglist 插件 will
    processes the tags defined in newly edited files. You can then open the
    taglist window only when you need to select a tag and then automatically
    close the taglist window after selecting the tag.
-3. You can configure the taglist plugin to display only the tags defined in
-   the current file in the taglist window. By default, the taglist plugin
+3. You can configure the taglist 插件 to display only the tags defined in
+   the current file in the taglist window. By default, the taglist 插件
    displays the tags defined in all the files in the Vim buffer list. As you
    switch between files, the taglist window will be refreshed to display only
    the tags defined in the current file.
 4. In GUI Vim, you can use the Tags pull-down and popup menu created by the
-   taglist plugin to display the tags defined in the current file and select a
+   taglist 插件 to display the tags defined in the current file and select a
    tag to jump to it. You can use the menu without opening the taglist window.
    By default, the Tags menu is disabled.
-5. You can configure the taglist plugin to display the name of the current tag
+5. You can configure the taglist 插件 to display the name of the current tag
    in the Vim window status line or in the Vim window title bar. For this to
    work without the taglist window or menu, you need to configure the taglist
-   plugin to process the tags defined in a file always.
+   插件 to process the tags defined in a file always.
 6. You can save the tags defined in multiple files to a taglist session file
-   and load it when needed. You can also configure the taglist plugin to not
+   and load it when needed. You can also configure the taglist 插件 to not
    update the taglist window when editing new files. You can then manually add
    files to the taglist window.
 
@@ -217,7 +217,7 @@ single mouse click set the 'Tlist_Use_SingleClick' variable to 1.
 
 If the selected file is already opened in a window, then the cursor is moved
 to that window. If the file is not currently opened in a window then the file
-is opened in the window used by the taglist plugin to show the previously
+is opened in the window used by the taglist 插件 to show the previously
 selected file. If there are no usable windows, then the file is opened in a
 new window.  The file is not opened in special windows like the quickfix
 window, preview window and windows containing buffer with the 'buftype' option
@@ -241,7 +241,7 @@ beginning of the next file. When you reach the first or last file, the search
 wraps around and the jumps to the next/previous file.
 
 Highlighting the current tag~
-The taglist plugin automatically highlights the name of the current tag in the
+The taglist 插件 automatically highlights the name of the current tag in the
 taglist window. The Vim |CursorHold| autocmd event is used for this. If the
 current tag name is not visible in the taglist window, then the taglist window
 contents are scrolled to make that tag name visible. You can also use the
@@ -255,7 +255,7 @@ low value.
 To disable the automatic highlighting of the current tag name in the taglist
 window, set the 'Tlist_Auto_Highlight_Tag' variable to zero.
 
-When entering a Vim buffer/window, the taglist plugin automatically highlights
+When entering a Vim buffer/window, the taglist 插件 automatically highlights
 the current tag in that buffer/window.  If you like to disable the automatic
 highlighting of the current tag when entering a buffer, set the
 'Tlist_Highlight_Tag_On_BufEnter' variable to zero.
@@ -263,7 +263,7 @@ highlighting of the current tag when entering a buffer, set the
 Adding files to the taglist~
 When the taglist window is opened, all the files in the Vim buffer list are
 processed and the supported files are added to the taglist.  When you edit a
-file in Vim, the taglist plugin automatically processes this file and adds it
+file in Vim, the taglist 插件 automatically processes this file and adds it
 to the taglist. If you close the taglist window, the tag information in the
 taglist is retained.
 
@@ -280,8 +280,8 @@ taglist, you can use the following command:
 <
 Note that when adding several files with a large number of tags or a large
 number of files, it will take several seconds to several minutes for the
-taglist plugin to process all the files. You should not interrupt the taglist
-plugin by pressing <CTRL-C>.
+taglist 插件 to process all the files. You should not interrupt the taglist
+插件 by pressing <CTRL-C>.
 
 You can recursively add multiple files from a directory tree using the
 ":TlistAddFilesRecursive" command:
@@ -311,15 +311,15 @@ When a buffer is removed from the Vim buffer list using the ":bdelete" or the
 for this buffer.
 
 Updating the tags displayed for a file~
-The taglist plugin keeps track of the modification time of a file. When the
-modification time changes (the file is modified), the taglist plugin
+The taglist 插件 keeps track of the modification time of a file. When the
+modification time changes (the file is modified), the taglist 插件
 automatically updates the tags listed for that file. The modification time of
 a file is checked when you enter a window containing that file or when you
 load that file.
 
 You can also update or refresh the tags displayed for a file by pressing the
 "u" key in the taglist window. If an existing file is modified, after the file
-is saved, the taglist plugin automatically updates the tags displayed for the
+is saved, the taglist 插件 automatically updates the tags displayed for the
 file.
 
 You can also use the ":TlistUpdate" command to update the tags for the current
@@ -385,12 +385,12 @@ For tags with scope information (like class members, structures inside
 structures, etc.), the scope information is displayed in square brackets "[]"
 after the tag name.
 
-The contents of the taglist buffer/window are managed by the taglist plugin.
+The contents of the taglist buffer/window are managed by the taglist 插件.
 The |'filetype'| for the taglist buffer is set to 'taglist'.  The Vim
 |'modifiable'| option is turned off for the taglist buffer. You should not
 manually edit the taglist buffer, by setting the |'modifiable'| flag. If you
-manually edit the taglist buffer contents, then the taglist plugin will be out
-of sync with the taglist buffer contents and the plugin will no longer work
+manually edit the taglist buffer contents, then the taglist 插件 will be out
+of sync with the taglist buffer contents and the 插件 will no longer work
 correctly. To redisplay the taglist buffer contents again, close the taglist
 window and reopen it.
 
@@ -452,7 +452,7 @@ files.
 
 Displaying the tag name in the Vim status line or the window title bar~
 You can use the Tlist_Get_Tagname_By_Line() function provided by the taglist
-plugin to display the current tag name in the Vim status line or the window
+插件 to display the current tag name in the Vim status line or the window
 title bar. Similarly, you can use the Tlist_Get_Tag_Prototype_By_Line()
 function to display the current tag prototype in the Vim status line or the
 window title bar.
@@ -468,7 +468,7 @@ window title bar:
 	:set title titlestring=%<%f\ %([%{Tlist_Get_Tagname_By_Line()}]%)
 <
 Note that the current tag name can be displayed only after the file is
-processed by the taglist plugin. For this, you have to either set the
+processed by the taglist 插件. For this, you have to either set the
 'Tlist_Process_File_Always' variable to 1 or open the taglist window or use
 the taglist menu. For more information about configuring the Vim status line,
 refer to the documentation for the Vim |'statusline'| option.
@@ -560,7 +560,7 @@ The above keys will work in both the normal mode and the insert mode.
 
 						*taglist-menu*
 Taglist menu~
-When using GUI Vim, the taglist plugin can display the tags defined in the
+When using GUI Vim, the taglist 插件 can display the tags defined in the
 current file in the drop-down menu and the popup menu. By default, this
 feature is turned off. To turn on this feature, set the 'Tlist_Show_Menu'
 variable to 1.
@@ -595,12 +595,12 @@ selecting the 'Tags->Sort menu by->Name/Order' menu entry.
 You can tear-off the Tags menu and keep it on the side of the Vim window
 for quickly locating the tags.
 
-Using the taglist plugin with the winmanager plugin~
-You can use the taglist plugin with the winmanager plugin. This will allow you
-to use the file explorer, buffer explorer and the taglist plugin at the same
-time in different windows. To use the taglist plugin with the winmanager
-plugin, set 'TagList' in the 'winManagerWindowLayout' variable. For example,
-to use the file explorer plugin and the taglist plugin at the same time, use
+Using the taglist 插件 with the winmanager 插件~
+You can use the taglist 插件 with the winmanager 插件. This will allow you
+to use the file explorer, buffer explorer and the taglist 插件 at the same
+time in different windows. To use the taglist 插件 with the winmanager
+插件, set 'TagList' in the 'winManagerWindowLayout' variable. For example,
+to use the file explorer 插件 and the taglist 插件 at the same time, use
 the following setting: >
 
 	let winManagerWindowLayout = 'FileExplorer|TagList'
@@ -615,9 +615,9 @@ information about using the taglist window. If you again press the <F1> key,
 the help information is removed from the taglist window.
 
 						*taglist-debug*
-Debugging the taglist plugin~
+Debugging the taglist 插件~
 You can use the ":TlistDebug" command to enable logging of the debug messages
-from the taglist plugin. To display the logged debug messages, you can use the
+from the taglist 插件. To display the logged debug messages, you can use the
 ":TlistMessages" command. To disable the logging of the debug messages, use
 the ":TlistUndebug" command.
 
@@ -630,10 +630,10 @@ characters from the debug messages are stored.
 						*taglist-options*
 6. Options~
 
-A number of Vim variables control the behavior of the taglist plugin. These
+A number of Vim variables control the behavior of the taglist 插件. These
 variables are initialized to a default value. By changing these variables you
-can change the behavior of the taglist plugin. You need to change these
-settings only if you want to change the behavior of the taglist plugin. You
+can change the behavior of the taglist 插件. You need to change these
+settings only if you want to change the behavior of the taglist 插件. You
 should use the |:let| command in your .vimrc file to change the setting of any
 of these variables.
 
@@ -680,7 +680,7 @@ description of these variables refer to the text below this table.
 
 						*'Tlist_Auto_Highlight_Tag'*
 Tlist_Auto_Highlight_Tag~
-The taglist plugin will automatically highlight the current tag in the taglist
+The taglist 插件 will automatically highlight the current tag in the taglist
 window. If you want to disable this, then you can set the
 'Tlist_Auto_Highlight_Tag' variable to zero. Note that even though the current
 tag highlighting is disabled, the tags for a new file will still be added to
@@ -740,7 +740,7 @@ ctags utility. If exuberant ctags is present in any one of the directories in
 the PATH environment variable, then there is no need to set this variable.
 
 The exuberant ctags tool can be installed under different names.  When the
-taglist plugin starts up, if the 'Tlist_Ctags_Cmd' variable is not set, it
+taglist 插件 starts up, if the 'Tlist_Ctags_Cmd' variable is not set, it
 checks for the names exuberant-ctags, exctags, ctags, ctags.exe and tags in
 the PATH environment variable.  If any one of the named executable is found,
 then the Tlist_Ctags_Cmd variable is set to that name.
@@ -750,7 +750,7 @@ PATH environment variable, then set this variable to point to the location of
 the ctags utility in your system. Note that this variable should point to the
 fully qualified exuberant ctags location and NOT to the directory in which
 exuberant ctags is installed. If the exuberant ctags tool is not found in
-either PATH or in the specified location, then the taglist plugin will not be
+either PATH or in the specified location, then the taglist 插件 will not be
 loaded. Examples:
 >
 	let Tlist_Ctags_Cmd = 'd:\tools\ctags.exe'
@@ -867,9 +867,9 @@ less characters:
 <
 						*'Tlist_Process_File_Always'*
 Tlist_Process_File_Always~
-By default, the taglist plugin will generate and process the tags defined in
+By default, the taglist 插件 will generate and process the tags defined in
 the newly opened files only when the taglist window is opened or when the
-taglist menu is enabled. When the taglist window is closed, the taglist plugin
+taglist menu is enabled. When the taglist window is closed, the taglist 插件
 will stop processing the tags for newly opened files.
 
 You can set the 'Tlist_Process_File_Always' variable to 1 to generate the list
@@ -891,7 +891,7 @@ feature, set the 'Tlist_Show_Menu' variable to 1:
 <
 						*'Tlist_Show_One_File'*
 Tlist_Show_One_File~
-By default, the taglist plugin will display the tags defined in all the loaded
+By default, the taglist 插件 will display the tags defined in all the loaded
 buffers in the taglist window. If you prefer to display the tags defined only
 in the current buffer, then you can set the 'Tlist_Show_One_File' to 1. When
 this variable is set to 1, as you switch between buffers, the taglist window
@@ -972,7 +972,7 @@ value less than that of the |'winwidth'| option setting, then Vim will use the
 value of the |'winwidth'| option.
 
 When new Vim windows are opened and existing windows are closed, the taglist
-plugin will try to maintain the width of the taglist window to the size
+插件 will try to maintain the width of the taglist window to the size
 specified by the 'Tlist_WinWidth' variable.
 
 ==============================================================================
@@ -1085,9 +1085,9 @@ taglist 插件提供了以下命令：
 						*:TlistHighlightTag*
 :TlistHighlightTag
 		Highlight the current tag in the taglist window. By default,
-		the taglist plugin periodically updates the taglist window to
+		the taglist 插件 periodically updates the taglist window to
 		highlight the current tag. This command can be used to force
-		the taglist plugin to highlight the current tag.
+		the taglist 插件 to highlight the current tag.
 
 						*:TlistToggle*
 :TlistToggle	Open or close (toggle) the taglist window. Opens the taglist
@@ -1118,8 +1118,8 @@ taglist 插件提供了以下命令：
 						*taglist-functions*
 8. Global functions~
 
-The taglist plugin provides several global functions that can be used from
-other Vim plugins to interact with the taglist plugin. These functions are
+The taglist 插件 provides several global functions that can be used from
+other Vim 插件s to interact with the taglist 插件. These functions are
 described below.
 
 |Tlist_Update_File_Tags()|		Update the tags for the specified file
@@ -1135,7 +1135,7 @@ described below.
 					    *Tlist_Update_File_Tags()*
 Tlist_Update_File_Tags({filename}, {filetype})
 		Update the tags for the file {filename}. The second argument
-		specifies the Vim filetype for the file. If the taglist plugin
+		specifies the Vim filetype for the file. If the taglist 插件
 		has not processed the file previously, then the exuberant
 		ctags tool is invoked to generate the tags for the file.
 
@@ -1155,38 +1155,38 @@ Tlist_Get_Tagname_By_Line([{filename}, {linenumber}])
 
 					    *Tlist_Set_App()*
 Tlist_Set_App({appname})
-		Set the name of the plugin that controls the taglist plugin
+		Set the name of the 插件 that controls the taglist 插件
 		window and buffer. This can be used to integrate the taglist
-		plugin with other Vim plugins.
+		插件 with other Vim 插件s.
 
-		For example, the winmanager plugin and the Cream package use
+		For example, the winmanager 插件 and the Cream package use
 		this function and specify the appname as "winmanager" and
 		"cream" respectively.
 
-		By default, the taglist plugin is a stand-alone plugin and
+		By default, the taglist 插件 is a stand-alone 插件 and
 		controls the taglist window and buffer. If the taglist window
-		is controlled by an external plugin, then the appname should
+		is controlled by an external 插件, then the appname should
 		be set appropriately.
 
 ==============================================================================
 						*taglist-extend*
 9. Extending~
 
-The taglist plugin supports all the languages supported by the exuberant ctags
+The taglist 插件 supports all the languages supported by the exuberant ctags
 tool, which includes the following languages: Assembly, ASP, Awk, Beta, C,
 C++, C#, Cobol, Eiffel, Erlang, Fortran, HTML, Java, Javascript, Lisp, Lua,
 Make, Pascal, Perl, PHP, Python, Rexx, Ruby, Scheme, Shell, Slang, SML, Sql,
 TCL, Verilog, Vim and Yacc.
 
-You can extend the taglist plugin to add support for new languages and also
+You can extend the taglist 插件 to add support for new languages and also
 modify the support for the above listed languages.
 
-You should NOT make modifications to the taglist plugin script file to add
+You should NOT make modifications to the taglist 插件 script file to add
 support for new languages. You will lose these changes when you upgrade to the
-next version of the taglist plugin. Instead you should follow the below
-described instructions to extend the taglist plugin.
+next version of the taglist 插件. Instead you should follow the below
+described instructions to extend the taglist 插件.
 
-You can extend the taglist plugin by setting variables in the .vimrc or _vimrc
+You can extend the taglist 插件 by setting variables in the .vimrc or _vimrc
 file. The name of these variables depends on the language name and is
 described below.
 
@@ -1248,13 +1248,13 @@ Functions" as the title for the function tags, use
 	let tlist_c_settings = 'c;f:My Functions'
 
 When you set the tlist_xxx_settings variable, you will override the default
-setting used by the taglist plugin for the 'xxx' language. You cannot add to
-the default options used by the taglist plugin for a particular file type. To
-add to the options used by the taglist plugin for a language, copy the option
-values from the taglist plugin file to your .vimrc file and modify it.
+setting used by the taglist 插件 for the 'xxx' language. You cannot add to
+the default options used by the taglist 插件 for a particular file type. To
+add to the options used by the taglist 插件 for a language, copy the option
+values from the taglist 插件 file to your .vimrc file and modify it.
 
 Adding support for a new language~
-If you want to add support for a new language to the taglist plugin, you need
+If you want to add support for a new language to the taglist 插件, you need
 to first extend the exuberant ctags tool. For more information about extending
 exuberant ctags, visit the following page:
 
@@ -1264,14 +1264,14 @@ To add support for a new language, set the tlist_xxx_settings variable in the
 ~/.vimrc file appropriately as described above. Replace 'xxx' in the variable
 name with the Vim filetype name for the new language.
 
-For example, to extend the taglist plugin to support the latex language, you
+For example, to extend the taglist 插件 to support the latex language, you
 can use the following line (assuming, you have already extended exuberant
 ctags to support the latex language):
 
 	let tlist_tex_settings='latex;b:bibitem;c:command;l:label'
 
 With the above line, when you edit files of filetype "tex" in Vim, the taglist
-plugin will invoke the exuberant ctags tool passing the "latex" filetype and
+插件 will invoke the exuberant ctags tool passing the "latex" filetype and
 the flags b, c and l to generate the tags. The text heading 'bibitem',
 'command' and 'label' will be used in the taglist window for the tags which
 are generated for the flags b, c and l respectively.
@@ -1390,7 +1390,7 @@ are generated for the flags b, c and l respectively.
 Q. A file has more than one tag with the same name. When I select a tag name
    from the taglist window, the cursor is positioned at the incorrect tag
    location.
-A. The taglist plugin uses the search pattern generated by the exuberant ctags
+A. The taglist 插件 uses the search pattern generated by the exuberant ctags
    utility to position the cursor at the location of a tag definition. If a
    file has more than one tag with the same name and same prototype, then the
    search pattern will be the same. In this case, when searching for the tag
@@ -1398,7 +1398,7 @@ A. The taglist plugin uses the search pattern generated by the exuberant ctags
 
 Q. I have made some modifications to my file and introduced new
    functions/classes/variables. I have not yet saved my file. The taglist
-   plugin is not displaying the new tags when I update the taglist window.
+   插件 is not displaying the new tags when I update the taglist window.
 A. The exuberant ctags utility will process only files that are present in the
    disk. To list the tags defined in a file, you have to save the file and
    then update the taglist window.
@@ -1422,7 +1422,7 @@ A. The exuberant ctags utility will process only files that are present in the
 ==============================================================================
 						*taglist-license*
 11. 许可证~
-Permission is hereby granted to use and distribute the taglist plugin, with or
+Permission is hereby granted to use and distribute the taglist 插件, with or
 without modifications, provided that this copyright notice is copied with it.
 Like anything else that's free, taglist.vim is provided *as is* and comes with
 no warranty of any kind, either expressed or implied. In no event will the
@@ -1438,10 +1438,10 @@ software.
 2. Support for displaying tags in a modified (not-yet-saved) file.
 3. Automatically open the taglist window only for selected filetypes.
    For other filetypes, close the taglist window.
-4. When using the shell from the MKS toolkit, the taglist plugin
+4. When using the shell from the MKS toolkit, the taglist 插件
    doesn't work.
-5. The taglist plugin doesn't work with files edited remotely using the
-   netrw plugin. The exuberant ctags utility cannot process files over
+5. The taglist 插件 doesn't work with files edited remotely using the
+   netrw 插件. The exuberant ctags utility cannot process files over
    scp/rcp/ftp, etc.
 
 ==============================================================================
