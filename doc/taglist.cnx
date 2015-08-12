@@ -124,14 +124,14 @@ Vim 是没有 system() 函数，这是基于安全原因.
    目录, 打开 Vim 和运行 ":helptags ." 命令生成
    taglist 帮助文件的 tag. 没有这个步骤,你是不能跳转到 taglist 帮助文件
    标题.
-3. If the exuberant ctags utility is not present in one of the directories in
-   the PATH environment variable, then set the 'Tlist_Ctags_Cmd' variable to
-   point to the location of the exuberant ctags utility (not to the directory)
-   in the .vimrc file.
-4. If you are running a terminal/console version of Vim and the terminal
-   doesn't support changing the window width then set the
-   'Tlist_Inc_Winwidth' variable to 0 in the .vimrc file.
-5. Restart Vim.
+3. 如果 exuberant ctags 工具由 PATH 环境参数
+   指定的其中一个目录, 就应该 .vimrc 文件设定 'Tlist_Ctags_Cmd' 参数 来
+   指定 exuberant ctags 工具
+   所在的位置 (not to the directory).
+4. 如果你正在运行一个终端/控制台版本的 VIM 并且终端
+   不支持改变窗口宽度，那么就应该设置
+   'Tlist_Inc_Winwidth' 参数为 0  并写入 .vimrc 文件中.
+5. 重启 Vim.
 6. You can now use the ":TlistToggle" command to open/close the taglist
    window. You can use the ":help taglist" command to get more information
    about using the taglist 插件.
