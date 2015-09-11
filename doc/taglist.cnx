@@ -1,10 +1,10 @@
-*taglist.txt*	用于浏览源代码的插件
+*taglist.cnx*	用于浏览源代码的插件
 
 作者：Yegappan Lakshmanan  (yegappan AT yahoo DOT com)
 译者：闲耘™(hotoo.cn[AT]gmail.com)
       张雷 (zhang.lei.fly[AT]gmail.com)
       davidx (mykingheaven[AT]gmail.com)
-
+      minyang(minyang78[AT]gmail.com)
 针对 Vim version 6.0 及其以上版本
 最后更新： 2007/5/24
 
@@ -36,10 +36,9 @@
       并以文件名作为分组显示。
     * 当 taglist 窗口中的标签名被选中时，光标会自动定位在源文件对应的
       标签定义处。
-    * 自动高亮当前标签名。
+    * 自动高亮当前 tag 名。
     * tags 按照类型分组并显示在可折叠的树中。
-    * Can display the prototype and scope of a tag.
-    * 可以显示 tag 的原型和作用域。
+    * 可以显示 tag 的原型结构和作用域。
     * 在 taglist 窗口中用 tag 的原型来替代 tag 名称显示（可选）。
     * tag 列表可以按照名称或者时间顺序排序。
     * 支持以下语言文件： Assembly, ASP, Awk, Beta, C,
@@ -63,917 +62,908 @@ Taglist 的主页在:
 >
 	http://vim-taglist.sourceforge.net/
 <
-你可以加入到 Taglist 的邮件列表中来提出你的问题, 建议, 或者bug报告.
+你可以加入到 Taglist 的邮件列表中来提出你的问题, 建议, 或者 bug 报告.
 访问下面的页面来加入到邮件列表中:
 >
 	http://groups.yahoo.com/group/taglist
 <
 ==============================================================================
 						*taglist-requirements*
-3. Requirements~
+3. 须求~
 
-The taglist plugin requires the following:
+这个 taglist 插件需要以下组件:
 
-    * Vim version 6.0 and above
-    * Exuberant ctags 5.0 and above
+    * Vim 6.0 或更高级版本
+    * Exuberant ctags 5.0 或 更高级版本
 
-The taglist plugin will work on all the platforms where the exuberant ctags
-utility and Vim are supported (this includes MS-Windows and Unix based
-systems).
+这个 taglist 插件可以在所有系统平台工作,只要系统平台的有 exuberant ctags
+utility 和 Vim 支持 (这里包括 MS-Windows 和 基于 Unix
+的操作系统平台).
 
-The taglist plugin relies on the exuberant ctags utility to dynamically
-generate the tag listing.  The exuberant ctags utility must be installed in
-your system to use this plugin.  The exuberant ctags utility is shipped with
-most of the Linux distributions.  You can download the exuberant ctags utility
-from
+这个 taglist 插件依赖 exuberant ctags 工具动态
+生成的 tag 列表. exuberant ctags 必须安装到
+你的系统里，如果你想使用这个插件.  exuberant ctags 工具随
+大多数的 Linux 发行版一起发布.  你也可下载 exuberant ctags 工具
+从:
 >
 	http://ctags.sourceforge.net
 <
-The taglist plugin doesn't use or create a tags file and there is no need to
-create a tags file to use this plugin. The taglist plugin will not work with
-the GNU ctags or the Unix ctags utility.
+这个 taglist 插件不用建立 tags 文件 也没必要
+建立一个 tags 文件来使用这个插件. 这个 taglist 插件不能正常工作如果没有
+ GNU ctags 或  Unix ctags 工作.
 
-This plugin relies on the Vim "filetype" detection mechanism to determine the
-type of the current file. You have to turn on the Vim filetype detection by
-adding the following line to your .vimrc file:
+这个插件依赖于 Vim 的 "filetype" 检测机能 去检测 
+当前文件的类型. 你必须打开 Vim 文件检测机能，通过 
+添加以下命令行到你的 .vimrc 文件:
 >
 	filetype on
 <
-The taglist plugin will not work if you run Vim in the restricted mode (using
-the -Z command-line argument).
+这个 taglist 插件 不能正常工作，如果你打开了 Vim 严格模式 (使用了
+ -Z 命令行参数).
 
-The taglist plugin uses the Vim system() function to invoke the exuberant
-ctags utility. If Vim is compiled without the system() function then you
-cannot use the taglist plugin. Some of the Linux distributions (Suse) compile
-Vim without the system() function for security reasons.
+这个 taglist 插件 使用了 Vim system() 函数 协同 exuberant
+ctags 工具. 如果 Vim 编译时没有 + system() 函数那么你就
+没法用 taglist 插件.一些 Linux 发行版 (如Suse) 编译的
+Vim 是没有 system() 函数，这是基于安全原因的.
 
 ==============================================================================
 						*taglist-install*
-4. Installation~
+4. 安装~
 
-1. Download the taglist.zip file and unzip the files to the $HOME/.vim or the
-   $HOME/vimfiles or the $VIM/vimfiles directory. After this step, you should
-   have the following two files (the directory structure should be preserved):
+1. 下载 taglist.zip 文件和解压这个文件到 $HOME/.vim 或者
+   $HOME/vimfiles 或者 $VIM/vimfiles 目录. 完成这个步骤后,
+   你会以下两个文件 (目录结构要维持原样):
 
-	plugin/taglist.vim - main taglist plugin file
-	doc/taglist.txt    - documentation (help) file
+	plugin/taglist.vim - taglist 插件的主文件 
+	doc/taglist.txt    - 文档 (帮助) 文件
 
-   Refer to the |add-plugin|and |'runtimepath'| Vim help pages for more
-   details about installing Vim plugins.
-2. Change to the $HOME/.vim/doc or $HOME/vimfiles/doc or $VIM/vimfiles/doc
-   directory, start Vim and run the ":helptags ." command to process the
-   taglist help file. Without this step, you cannot jump to the taglist help
-   topics.
-3. If the exuberant ctags utility is not present in one of the directories in
-   the PATH environment variable, then set the 'Tlist_Ctags_Cmd' variable to
-   point to the location of the exuberant ctags utility (not to the directory)
-   in the .vimrc file.
-4. If you are running a terminal/console version of Vim and the terminal
-   doesn't support changing the window width then set the
-   'Tlist_Inc_Winwidth' variable to 0 in the .vimrc file.
-5. Restart Vim.
-6. You can now use the ":TlistToggle" command to open/close the taglist
-   window. You can use the ":help taglist" command to get more information
-   about using the taglist plugin.
+   通过参考 |add-plugin| 和 |'runtimepath'| Vim 帮助页面得到更多
+   关于安装 Vim 插件的细节.
+2. 切换到 $HOME/.vim/doc 或者 $HOME/vimfiles/doc 或者 $VIM/vimfiles/doc
+   目录, 打开 Vim 和 运行 ":helptags ." 命令生成
+   taglist 帮助文件的 tags . 没有这个步骤,你是不能跳转到
+   taglist 帮助文件标题.
+3. 如果 exuberant ctags 工具没有安装在 由 PATH 环境参数
+   指定的其中一个目录, 就应该在 .vimrc 文件设定 'Tlist_Ctags_Cmd' 参数
+   来指定 exuberant ctags 工具
+   所在的目录 (必须包括完整的目录和文件名).
+4. 如果你正在运行一个终端/控制台版本的 VIM 并且终端
+   不支持改变窗口宽度，那么就应该设置
+   'Tlist_Inc_Winwidth' 参数为 0  并写入 .vimrc 文件中.
+5. 重启 Vim.
+6. 你现在可以使用 ":TlistToggle" 命令 打开/关闭 taglist
+   窗口. 你可以使用 ":help taglist" 命令 获得更多关于
+   使用 taglist 插件信息.
 
-To uninstall the taglist plugin, remove the plugin/taglist.vim and
-doc/taglist.txt files from the $HOME/.vim or $HOME/vimfiles directory.
+要卸载 taglist 插件, 只要删除 $HOME/.vim 或者 $HOME/vimfiles目录
+中的 plugin/taglist.vim 和 doc/taglist.txt 文件  .
 
 ==============================================================================
 						*taglist-using*
-5. Usage~
+5. 使用~
 
-The taglist plugin can be used in several different ways.
+这个taglist 插件可以以几种不同的方式被使用.
 
-1. You can keep the taglist window open during the entire editing session. On
-   opening the taglist window, the tags defined in all the files in the Vim
-   buffer list will be displayed in the taglist window. As you edit files, the
-   tags defined in them will be added to the taglist window. You can select a
-   tag from the taglist window and jump to it. The current tag will be
-   highlighted in the taglist window. You can close the taglist window when
-   you no longer need the window.
-2. You can configure the taglist plugin to process the tags defined in all the
-   edited files always. In this configuration, even if the taglist window is
-   closed and the taglist menu is not displayed, the taglist plugin will
-   processes the tags defined in newly edited files. You can then open the
-   taglist window only when you need to select a tag and then automatically
-   close the taglist window after selecting the tag.
-3. You can configure the taglist plugin to display only the tags defined in
-   the current file in the taglist window. By default, the taglist plugin
-   displays the tags defined in all the files in the Vim buffer list. As you
-   switch between files, the taglist window will be refreshed to display only
-   the tags defined in the current file.
-4. In GUI Vim, you can use the Tags pull-down and popup menu created by the
-   taglist plugin to display the tags defined in the current file and select a
-   tag to jump to it. You can use the menu without opening the taglist window.
-   By default, the Tags menu is disabled.
-5. You can configure the taglist plugin to display the name of the current tag
-   in the Vim window status line or in the Vim window title bar. For this to
-   work without the taglist window or menu, you need to configure the taglist
-   plugin to process the tags defined in a file always.
-6. You can save the tags defined in multiple files to a taglist session file
-   and load it when needed. You can also configure the taglist plugin to not
-   update the taglist window when editing new files. You can then manually add
-   files to the taglist window.
+1. 你可以保持 taglist 窗口打开 在整个编辑会话期间. 在
+   打开 taglist 窗口里, 在 Vim 缓冲区里所有的文件里，所有定义过
+   的 tags 会以列表形式显示在 taglist 窗口. 当你编辑文件, 新定义
+   的 tags 会被添加到 taglist 窗口. 你可以 taglist 窗口选择一个
+   tag 并通过它跳转.  当前的 tag 会在
+   taglist 窗口高亮显示.当你不在需要这个窗口时
+   你可以关闭 taglist 窗口 .
+2. 你可以配置 taglist 插件 持续去处理  
+   所有 编辑完的文件里的 tags . 在这个配置里, 甚至 taglist 窗口 
+   是关闭的 和 taglist 菜单没有显示, taglist 插件也会 
+   处理新编辑的文件的 tags . 你可以在你需要选择一个 tag 时打
+   taglist 窗口,选完后自动关闭 
+   taglist 窗口 .
+3. 你可以配置 taglist 插件， 在taglist 窗口 
+   只显示当前文件所定义了的 tags . 默认状态下, taglist 插件
+   显示 Vim 缓冲区列表里的全部文件里所定义的 tags . 当你
+   切换文件时, taglist 窗口 会刷新并只显示
+   当前文件所定义的 tags .
+4. 在 GUI Vim 里, 你可以使用 Tags 下拉弹出菜单(这个菜单由 taglist 
+   插件生成) 里显示的当前文件定义过的 tags 并通过选择其中一个
+   tag 跳转到文件的位置. 如果使用菜单你可以不打开 taglist 窗口.
+   默认状态下, Tags 菜单是禁用的.
+5. 你可以配置 taglist 插件 显示当前的 tag 名称
+   在 Vim 窗口状态栏上或者在 Vim 窗口标题栏. 不打开
+   窗口或者菜单而实现这个功能, 你需要配置 taglist
+   插件每次打开新文件时都去处理定义在文件里 tags .
+6. 你可以保存定义在多个文件里的 tags 到时一个 taglist 会话文件里
+   并在你需要时重载. 你也可以配置 taglist 插件 不
+   更新 taglist 窗口，当你编辑新文件时. 你还可以手动添加
+   文件到 taglist 窗口.
 
-Opening the taglist window~
-You can open the taglist window using the ":TlistOpen" or the ":TlistToggle"
-commands. The ":TlistOpen" command opens the taglist window and jumps to it.
-The ":TlistToggle" command opens or closes (toggle) the taglist window and the
-cursor remains in the current window. If the 'Tlist_GainFocus_On_ToggleOpen'
-variable is set to 1, then the ":TlistToggle" command opens the taglist window
-and moves the cursor to the taglist window.
+打开 taglist 窗口~
+你现在可以使用  ":TlistOpen" 或者  ":TlistToggle" 命令打开 taglist 窗口 
+ ":TlistOpen" 命令可以 打开 并跳转到 taglist 窗口.
+ ":TlistToggle" 打开或者关闭 (切换) taglist 窗口 且 
+光标保持在当前窗口. 如果 'Tlist_GainFocus_On_ToggleOpen'
+参数设置成 1, 那么 ":TlistToggle" 打开 taglist 窗口
+并移动光标到 taglist 窗口.
 
-You can map a key to invoke these commands. For example, the following command
-creates a normal mode mapping for the <F8> key to toggle the taglist window.
+你可以映射一个按键到这些命令. 举个例子, 以下的命令可以
+在普通模式下映射到 <F8> 按键 来切换 taglist 窗口.
 >
 	nnoremap <silent> <F8> :TlistToggle<CR>
 <
-Add the above mapping to your ~/.vimrc or $HOME/_vimrc file.
+添加上面的映射到你的 ~/.vimrc 或者 $HOME/_vimrc 文件.
 
-To automatically open the taglist window on Vim startup, set the
-'Tlist_Auto_Open' variable to 1.
+想在 Vim 启动时自动打开 taglist 窗口, 设置
+'Tlist_Auto_Open' 参数为 1.
 
-You can also open the taglist window on startup using the following command
-line:
+你也可通过如下命令在启动 Vim 时打开 taglist 窗口
+:
 >
 	$ vim +TlistOpen
 <
-Closing the taglist window~
-You can close the taglist window from the taglist window by pressing 'q' or
-using the Vim ":q" command. You can also use any of the Vim window commands to
-close the taglist window. Invoking the ":TlistToggle" command when the taglist
-window is opened, closes the taglist window. You can also use the
-":TlistClose" command to close the taglist window.
+关闭 taglist 窗口~
+你可以关闭 taglist 窗口 通过在 taglist 窗口 按 'q' 键 或者
+使用 Vim ":q" 命令. 你也可以其它 Vim 窗口 命令 去
+关闭 taglist 窗口.  当 taglist 窗口 打开时通 你可以通
+过 ":TlistToggle" 命令关闭 taglist 窗口. 你也可以用
+":TlistClose" 命令直接 关闭 taglist 窗口.
 
-To automatically close the taglist window when a tag or file is selected, you
-can set the 'Tlist_Close_On_Select' variable to 1.  To exit Vim when only the
-taglist window is present, set the 'Tlist_Exit_OnlyWindow' variable to 1.
+当选择完一个文件或者 tag 时，如果你想自动关闭 taglist 窗口。 你
+可以设置 'Tlist_Close_On_Select' 参数为 1 .   当
+taglist 窗口 还存在时想直接退出 Vim, 设置 'Tlist_Exit_OnlyWindow' 参数为 1.
 
 Jumping to a tag or a file~
-You can select a tag in the taglist window either by pressing the <Enter> key
-or by double clicking the tag name using the mouse. To jump to a tag on a
-single mouse click set the 'Tlist_Use_SingleClick' variable to 1.
+你可以在 taglist 窗口里，在一个 tag 名称上通过按 <Enter> 键
+或者 双击鼠标左键 选择一个 tag. 如果你想通过单击跳转一个 tag ,
+设置 'Tlist_Use_SingleClick' 参数为 1.
 
-If the selected file is already opened in a window, then the cursor is moved
-to that window. If the file is not currently opened in a window then the file
-is opened in the window used by the taglist plugin to show the previously
-selected file. If there are no usable windows, then the file is opened in a
-new window.  The file is not opened in special windows like the quickfix
-window, preview window and windows containing buffer with the 'buftype' option
-set.
+如果选择的文件已经在窗口打开, 那么光标就会直接移动到
+那个窗口.如果文件是没有打开过的，那么文件打开的位置会在
+taglist 插件 之前作用的那个窗口。
+如果全部窗口都是未使用的, 那么文件会在一个
+新窗口打开. 文件不会在特殊的窗口打开，如 quickfix
+窗口, 预览窗口和当 'buftype' 选项设置的含有缓冲文件的
+窗口。
 
-To jump to the tag in a new window, press the 'o' key. To open the file in the
-previous window (Ctrl-W_p) use the 'P' key. You can press the 'p' key to jump
-to the tag but still keep the cursor in the taglist window (preview).
+跳转一个 tag 并在新窗口打开文件, 按 'o' 键。 打开一个文件并使用之前的
+窗口(Ctrl-W_p)用 'P' 键. 你可以按 'p' 键跳转
+到当前的 tag 但光标保持在 taglist 窗口 (预览).
 
-To open the selected file in a tab, use the 't' key.  If the file is already
-present in a tab then the cursor is moved to that tab otherwise the file is
-opened in a new tab. To jump to a tag in a new tab press Ctrl-t.  The taglist
-window is automatically opened in the newly created tab.
+用标签页打开一个文件, 用 't' 键.  如果文件已经在一个标签页打开
+那么光标会移动到这个标签页，否则文件会在
+一个新的标签页打开. 打开一个新的标签页并跳转到一个 tag 按 <Ctrl-t> .
+那么 taglist 窗口会自动打开并新建一个标签页.
 
-Instead of jumping to a tag, you can open a file by pressing the <Enter> key
-or by double clicking the file name using the mouse.
+如果不是想跳转到一个 tag ,你只想打开一个文件，那么在文件名上按 <Enter> 键
+或者用鼠标双击文件名.
 
-In the taglist window, you can use the [[ or <Backspace> key to jump to the
-beginning of the previous file. You can use the ]] or <Tab> key to jump to the
-beginning of the next file. When you reach the first or last file, the search
-wraps around and the jumps to the next/previous file.
+在 taglist 窗口里, 你可以用 [[ 或者 <Backspace> 键 跳转到
+之前文件的开始位置. 你可以用 ]] 或者 <Tab> 键跳转
+下一个文件开始的位置. 当你去到第一个或者最后一个文件时, 搜索就会
+到回并跳转到 之后/之前 的文件.
 
-Highlighting the current tag~
-The taglist plugin automatically highlights the name of the current tag in the
-taglist window. The Vim |CursorHold| autocmd event is used for this. If the
-current tag name is not visible in the taglist window, then the taglist window
-contents are scrolled to make that tag name visible. You can also use the
-":TlistHighlightTag" command to force the highlighting of the current tag.
+高亮当前 tag~
+Taglist 插件 自动高亮当前 tag 的名称 在
+taglist 窗口里. 通过Vim的 |CursorHold| autocmd 事件实现此功能. 如果
+当前的 tag 名不在 taglist 窗口里的可视范围内, 那么 taglist 窗口
+上下卷动使 tag 名可见. 你也可以
+":TlistHighlightTag" 命令 强制高亮当前 tag.
 
 The tag name is highlighted if no activity is performed for |'updatetime'|
-milliseconds. The default value for this Vim option is 4 seconds. To avoid
-unexpected problems, you should not set the |'updatetime'| option to a very
-low value.
+milliseconds. 这个选项在 Vim 里的默认值是 4 秒. 为了避免
+出现不必要的问题, 你最好不要 设置 |'updatetime'| 选项为一个非常
+低的值.
 
-To disable the automatic highlighting of the current tag name in the taglist
-window, set the 'Tlist_Auto_Highlight_Tag' variable to zero.
+想要禁用自动高亮当前 tag 名 在 taglist
+窗口里, 设置 'Tlist_Auto_Highlight_Tag' 参数为 0.
 
-When entering a Vim buffer/window, the taglist plugin automatically highlights
-the current tag in that buffer/window.  If you like to disable the automatic
-highlighting of the current tag when entering a buffer, set the
-'Tlist_Highlight_Tag_On_BufEnter' variable to zero.
+当进入一个 Vim 缓冲区/窗口, taglist 插件自动高亮
+所进入 缓冲区/窗口 的当前 tag .  如果你想禁用
+进入缓冲区时自动高亮当前 tag 的功能, 设置
+'Tlist_Highlight_Tag_On_BufEnter' 参数为 0.
 
-Adding files to the taglist~
-When the taglist window is opened, all the files in the Vim buffer list are
-processed and the supported files are added to the taglist.  When you edit a
-file in Vim, the taglist plugin automatically processes this file and adds it
-to the taglist. If you close the taglist window, the tag information in the
-taglist is retained.
+添加多个文件到 taglist~
+当 taglist 窗口 打开时, 所有在 Vim 缓冲区列表里文件会被
+处理，如果是 taglist 支持的文件就会添加到 taglist 窗口.  当你在
+Vim里编辑一个文件, taglist 插件 会自动处理这个文件并添加到
+taglist 里. 如果你关闭 taglist 窗口, tag 信息 
+会在 taglist 保留.
 
-To process files even when the taglist window is not open, set the
-'Tlist_Process_File_Always' variable to 1.
+不打开 taglist 窗口 就处理文件的话, 设置
+'Tlist_Process_File_Always' 参数为 1.
 
-You can manually add multiple files to the taglist without opening them using
-the ":TlistAddFiles" and the ":TlistAddFilesRecursive" commands.
+你可以手动添加多个文件到 taglist 里，并不用实际打开它们，使用
+":TlistAddFiles" 和 ":TlistAddFilesRecursive" 命令.
 
-For example, to add all the C files in the /my/project/dir directory to the
-taglist, you can use the following command:
+举个例子, 添加所有 /my/project/dir 目录下所有的 C 文件到
+taglist, 你可以用以下命令:
 >
 	:TlistAddFiles /my/project/dir/*.c
 <
-Note that when adding several files with a large number of tags or a large
-number of files, it will take several seconds to several minutes for the
-taglist plugin to process all the files. You should not interrupt the taglist
-plugin by pressing <CTRL-C>.
+Note 当添加的文件带有很多 tags 或者 添加一大堆
+文件时, 那么要花费几秒到几分钟的时间给
+taglist 插件 去处理这些文件. 你不应该中断 taglist
+插件处理这些文件，通过按 <CTRL-C>.
 
-You can recursively add multiple files from a directory tree using the
-":TlistAddFilesRecursive" command:
+你想从一个目录树递归地添加多个文件，使用
+":TlistAddFilesRecursive" 命令:
 >
 	:TlistAddFilesRecursive /my/project/dir *.c
 <
-This command takes two arguments. The first argument specifies the directory
-from which to recursively add the files. The second optional argument
-specifies the wildcard matching pattern for selecting the files to add. The
-default pattern is * and all the files are added.
+这个命令接受两个参数. 第一个参数指定你想递归添加文件所在的目录
+. 第二个参数指定
+通配符模板来选择你想添加的文件. 
+默认的通配符模板是 * ，即添加目录下所有的文件.
 
-Displaying tags for only one file~
-The taglist window displays the tags for all the files in the Vim buffer list
-and all the manually added files. To display the tags for only the current
-active buffer, set the 'Tlist_Show_One_File' variable to 1.
+只显示一个文件的 tags ~
+Taglist 窗口 默认显示 Vim 缓冲区里所有文件 tags
+和所有手动添加文件的 tags . 如果只想显示当前
+活动缓冲区的 tags , 设置 'Tlist_Show_One_File' 参数为 1.
 
-Removing files from the taglist~
-You can remove a file from the taglist window, by pressing the 'd' key when the
-cursor is on one of the tags listed for the file in the taglist window. The
-removed file will no longer be displayed in the taglist window in the current
-Vim session. To again display the tags for the file, open the file in a Vim
-window and then use the ":TlistUpdate" command or use ":TlistAddFiles" command
-to add the file to the taglist.
+从 taglist 里移除文件~
+当光标在 taglist 窗口里并在文件的其中一个 tag 上，按 'd' 键
+你可以在 taglist 窗口移除一个文件(不显示这个文件的 tags ). 
+在当前 Vim 会话中 移除的文件将不会显示
+在 taglist 窗口.如果想再次显示这个文件在 tags , 在一个 Vim 窗口打开这个文件
+然后使用 ":TlistUpdate" 命令 或者 ":TlistAddFiles" 命令
+重新将这个文件添加到 taglist 里.
 
-When a buffer is removed from the Vim buffer list using the ":bdelete" or the
-":bwipeout" command, the taglist is updated to remove the stored information
-for this buffer.
+当缓冲文件从 Vim 缓冲区文件列表里 通过 ":bdelete" 或者 
+":bwipeout" 命令 移除, taglist 会更新并移除为这些缓冲文件
+保存的信息.
 
-Updating the tags displayed for a file~
-The taglist plugin keeps track of the modification time of a file. When the
-modification time changes (the file is modified), the taglist plugin
-automatically updates the tags listed for that file. The modification time of
-a file is checked when you enter a window containing that file or when you
-load that file.
+修改文件后更新显示 tags ~
+Taglist 插件会持续跟踪文件修改的次数. 当文件修改次数
+变更时 (文件已被修改), Taglist 插件
+自动更新文件的 tags . 文件修改次数
+是你在打开一个包含这个文件的窗口 和 当你重新
+加载这个文件的时候进行检测.
 
-You can also update or refresh the tags displayed for a file by pressing the
-"u" key in the taglist window. If an existing file is modified, after the file
-is saved, the taglist plugin automatically updates the tags displayed for the
-file.
+你也可以通过在 taglist 窗口里按 "u" 键  更新或者刷新
+文件的 tags . 如果一个已存在的文件被修改和
+保存后, taglist 插件 自动更新这个文件
+的 tags .
 
-You can also use the ":TlistUpdate" command to update the tags for the current
-buffer after you made some changes to it. You should save the modified buffer
-before you update the taglist window. Otherwise the listed tags will not
-include the new tags created in the buffer.
+你也可以 使用 ":TlistUpdate" 命令 去 更新 当前缓冲文件
+的 tags 在你对它作出更改后. 你应该保存修改后的缓存文件
+在你更新 taglist 窗口前. 否则 tags 的列表里将不会有
+当前缓存文件新建的 tag .
 
-If you have deleted the tags displayed for a file in the taglist window using
-the 'd' key, you can again display the tags for that file using the
-":TlistUpdate" command.
+在 taglist 窗口里，如果你不小心按 'd' 键
+删除了一个文件的 tags , 你想再次显示这个文件的 tags 使用
+":TlistUpdate" 命令.
 
-Controlling the taglist updates~
-To disable the automatic processing of new files or modified files, you can
-set the 'Tlist_Auto_Update' variable to zero. When this variable is set to
-zero, the taglist is updated only when you use the ":TlistUpdate" command or
-the ":TlistAddFiles" or the ":TlistAddFilesRecursive" commands. You can use
-this option to control which files are added to the taglist.
+控制 taglist 的更新方式~
+禁用自动处理一个新的文件或者修改过的文件, 你可以
+设置 'Tlist_Auto_Update' 参数为 0 .当这个参数设置为
+ 0 时, taglist 只会在你使用 ":TlistUpdate" 命令 或者
+":TlistAddFiles" 或者 ":TlistAddFilesRecursive" 命令时才更新. 
+这个选项可以让你控制那些文件应该添加到 taglist 里，（而那些不应该）.
 
-You can use the ":TlistLock" command to lock the taglist contents. After this
-command is executed, new files are not automatically added to the taglist.
-When the taglist is locked, you can use the ":TlistUpdate" command to add the
-current file or the ":TlistAddFiles" or ":TlistAddFilesRecursive" commands to
-add new files to the taglist.  To unlock the taglist, use the ":TlistUnlock"
-command.
+你可以 使用 ":TlistLock" 命令 去 锁定 taglist 内容. 执行完这个
+命令后, 新的文件将不会自动添加到 taglist 里.
+当 taglist 锁定时, 你可以用 ":TlistUpdate" 命令 添加当前
+文件 或者 ":TlistAddFiles" 或者 ":TlistAddFilesRecursive" 命令 
+添加新文件到 taglist 里. 解锁 taglist, 用":TlistUnlock"
+命令.
 
-Displaying the tag prototype~
-To display the prototype of the tag under the cursor in the taglist window,
-press the space bar. If you place the cursor on a tag name in the taglist
-window, then the tag prototype is displayed at the Vim status line after
-|'updatetime'| milliseconds. The default value for the |'updatetime'| Vim
-option is 4 seconds.
+显示 tag 原型结构~
+在 taglist 窗口里，光标所在的 tag 上,
+按 空格键. 在 taglist 窗口里 如果光标
+保持在 tag 名称上保持不动的话
+ 那么 tag 的原型结构会在 Vim 状态栏 显示
+|'updatetime'| 微秒.  |'updatetime'| 选项在 Vim
+里的默认值是 4 秒.
 
-You can get the name and prototype of a tag without opening the taglist window
-and the taglist menu using the ":TlistShowTag" and the ":TlistShowPrototype"
-commands. These commands will work only if the current file is already present
-in the taglist. To use these commands without opening the taglist window, set
-the 'Tlist_Process_File_Always' variable to 1.
+你可以一个 tag 的名称和原型结构而不用打开 taglist 窗口
+你只要在 taglist 菜单里使用 ":TlistShowTag" 和 ":TlistShowPrototype"
+命令. 这些命令只有在当前文件已在 taglist 打开，才能正确工作.
+使用这些命令而不打开 taglist 窗口, 设置
+ 'Tlist_Process_File_Always' 参数为 1.
 
-You can use the ":TlistShowTag" command to display the name of the tag at or
-before the specified line number in the specified file.  If the file name and
-line number are not supplied, then this command will display the name of the
-current tag. For example,
+你可以使用 ":TlistShowTag" 命令显示 某个文件指定行数或指定行数之前 tag 名称.
+如果这个文件不支持或
+指定行数不支持显示, 那么 这个 命令将显示当前
+ tag 的名称. 举个列子,
 >
 	:TlistShowTag
 	:TlistShowTag myfile.java 100
 <
-You can use the ":TlistShowPrototype" command to display the prototype of the
-tag at or before the specified line number in the specified file.  If the file
-name and the line number are not supplied, then this command will display the
-prototype of the current tag.  For example,
->
+你可以 使用 ":TlistShowPrototype" 某个文件指定行数或指定行数之前 tag 原型结构.
+如果这个文件不支持或
+指定行数不支持显示, 那么 这个 命令将显示当前
+ tag 的原型结构. 举个列子,
+ >
 	:TlistShowPrototype
 	:TlistShowPrototype myfile.c 50
 <
-In the taglist window, when the mouse is moved over a tag name, the tag
-prototype is displayed in a balloon. This works only in GUI versions where
-balloon evaluation is supported.
+在 taglist 窗口, 当鼠标移动到一个 tag 姓名之上, 这个 tag
+的原型结构会显示在弹窗提示时. 这个功能只能工作在 GUI 版本，
+并且这个版本支持弹窗提示.
 
-Taglist window contents~
-The taglist window contains the tags defined in various files in the taglist
-grouped by the filename and by the tag type (variable, function, class, etc.).
-For tags with scope information (like class members, structures inside
-structures, etc.), the scope information is displayed in square brackets "[]"
-after the tag name.
+Taglist 窗口的内容~
+Taglist 窗口包含各式各样的文件定义的 tags  并通过
+文件名各 tag 类型 (参数, 函数,类, 等等.).
+对于那些包含 作用域信息 (如类成员, structures inside
+structures, 等等.), 作用域信息会以方括号 "[]" 包裹
+显示在 tag 名称之后.
 
-The contents of the taglist buffer/window are managed by the taglist plugin.
-The |'filetype'| for the taglist buffer is set to 'taglist'.  The Vim
-|'modifiable'| option is turned off for the taglist buffer. You should not
-manually edit the taglist buffer, by setting the |'modifiable'| flag. If you
-manually edit the taglist buffer contents, then the taglist plugin will be out
-of sync with the taglist buffer contents and the plugin will no longer work
-correctly. To redisplay the taglist buffer contents again, close the taglist
-window and reopen it.
+taglist 缓冲区/窗口的内容是由 taglist 插件进行管理.
+taglist 缓冲区  |'filetype'| 设置为 'taglist'. 对于 taglist 缓冲区  Vim
+|'modifiable'| 选项设置为关闭 . 你不应该 
+手动编辑 taglist 缓冲区, 更改 |'modifiable'| 标识. 如果你
+手动编辑 taglist 缓冲区 内容, 那么 taglist 插件 将会
+与 taglist 缓冲区内容失去同步然后 taglist 插件将不能正常工作.
+再次重新显示 taglist 缓冲区内容 , 关闭 taglist
+窗口 然后重新打开.
 
-Opening and closing the tag and file tree~
-In the taglist window, the tag names are displayed as a foldable tree using
-the Vim folding support. You can collapse the tree using the '-' key or using
-the Vim |zc| fold command. You can open the tree using the '+' key or using
-the Vim |zo| fold command. You can open all the folds using the '*' key or
-using the Vim |zR| fold command. You can also use the mouse to open/close the
-folds. You can close all the folds using the '=' key. You should not manually
-create or delete the folds in the taglist window.
+打开和关闭 tag 和目录树~
+在 taglist 窗口里, tag 名称 是以可折叠目录树形式呈现的
+使用了 Vim 折叠功能. 你可以用 '-' 键折叠目录树 也可以用
+Vim 的 |zc| 折叠命令. 你可以用 '+' 键展开目录树 也可以用
+Vim 的 |zo| 折叠命令. 你可以用 '*' 键展开所有的折叠也可以用
+Vim 的 |zR| 折叠命令. 你还可以用鼠标打开/关闭
+折叠. 你可以用 '=' 关闭所有折叠. 在 taglist 窗口里，
+你不要手工建立 或者 删除折叠.
 
-To automatically close the fold for the inactive files/buffers and open only
-the fold for the current buffer in the taglist window, set the
-'Tlist_File_Fold_Auto_Close' variable to 1.
+在 taglist 窗口里，想自动关闭非激活文件/缓冲区折叠，
+只展开当前缓冲区的折叠 , 设置
+'Tlist_File_Fold_Auto_Close' 参数为 1.
 
-Sorting the tags for a file~
-The tags displayed in the taglist window can be sorted either by their name or
-by their chronological order. The default sorting method is by the order in
-which the tags appear in a file. You can change the default sort method by
-setting the 'Tlist_Sort_Type' variable to either "name" or "order". You can
-sort the tags by their name by pressing the "s" key in the taglist window. You
-can again sort the tags by their chronological order using the "s" key. Each
-file in the taglist window can be sorted using different order.
+对文件的 tags 进行排序~
+在 taglist 窗口里的 tags 可以按名称排序，也可以
+按时间空间排序.默认排序方式是以 tag 在文件里
+出现的先后顺序进行排列. 你可以改变默认排序方式通过
+设置 'Tlist_Sort_Type' 参数为 "name" 或者 "order".在 taglist 窗口里，
+你可以按 "s" 键 让 tags 按名称排序.
+你再次按 "s" 键 让 tags 按时间空间排序。
+在 taglist 窗口里的不同的文件可以按不同的方式进行排序.
 
-Zooming in and out of the taglist window~
-You can press the 'x' key in the taglist window to maximize the taglist
-window width/height. The window will be maximized to the maximum possible
-width/height without closing the other existing windows. You can again press
-'x' to restore the taglist window to the default width/height.
+缩放 taglist 窗口~
+在 taglist 窗口里 你可以按 'x' 键 最大化 taglist
+窗口 宽度/高度. 它的窗口将放大到最大可用的
+宽度/高度而不用关闭已存在的窗口. 你可以再按
+'x' 键恢复到默认的 宽度/高度.
 
 						*taglist-session*
-Taglist Session~
-A taglist session refers to the group of files and their tags stored in the
-taglist in a Vim session.
+Taglist 会话~
+一个 taglist 会话 指的 在一个 Vim 会话里，
+taglist 保存的是多个文件和它们的 tags .
 
-You can save and restore a taglist session (and all the displayed tags) using
-the ":TlistSessionSave" and ":TlistSessionLoad" commands.
+你可以保存和恢复一个 taglist 会话 (和所有显示的 tags) 通过使用
+":TlistSessionSave" 和 ":TlistSessionLoad" 命令.
 
-To save the information about the tags and files in the taglist to a file, use
-the ":TlistSessionSave" command and specify the filename:
+保存在 taglist 里 tags 信息和文件到一个文件, 
+使用 ":TlistSessionSave" 命令并指定文件名:
 >
 	:TlistSessionSave <file name>
 <
-To load a saved taglist session, use the ":TlistSessionLoad" command: >
+恢复一个保存的 taglist 会话, 使用 ":TlistSessionLoad" 命令: >
 
 	:TlistSessionLoad <file name>
 <
-When you load a taglist session file, the tags stored in the file will be
-added to the tags already stored in the taglist.
+当你加载一个 taglist 会话文件时, 保存在文件里的 tags 将会
+添加到已当前已保存的 taglist 里.
 
-The taglist session feature can be used to save the tags for large files or a
-group of frequently used files (like a project). By using the taglist session
-file, you can minimize the amount to time it takes to load/refresh the taglist
-for multiple files.
+taglist 会话功能多用于保存巨大文件生成的 tag  或者 一
+组常用常用文件(如一个工程)生成的 tags . 通过使用 taglist 会话
+文件, 你可以最小化 taglist 加载/刷新 多个文件
+所须的时间。
 
-You can create more than one taglist session file for multiple groups of
-files.
+你可以为多组文件建立多个 taglist 会话
+文件.
 
-Displaying the tag name in the Vim status line or the window title bar~
-You can use the Tlist_Get_Tagname_By_Line() function provided by the taglist
-plugin to display the current tag name in the Vim status line or the window
-title bar. Similarly, you can use the Tlist_Get_Tag_Prototype_By_Line()
-function to display the current tag prototype in the Vim status line or the
-window title bar.
+在 Vim 状态栏或者 window 标题栏里显示 tag 名称~
+你可以使用 taglist插件提供的 Tlist_Get_Tagname_By_Line() 函数在 Vim 状态栏 
+或者 window 标题栏显示当前的 tag 名称.
+同样的, 你可以用 the Tlist_Get_Tag_Prototype_By_Line()
+函数在 Vim 状态栏 或者 window 标题栏显示当前 tag 原型结构.
 
-For example, the following command can be used to display the current tag name
-in the status line:
+举个例子, 以下命令可以用来在显示当前 tag 名称到
+Vim 状态栏里:
 >
 	:set statusline=%<%f%=%([%{Tlist_Get_Tagname_By_Line()}]%)
 <
-The following command can be used to display the current tag name in the
-window title bar:
+以下命令可以用来在显示当前 tag 名称到
+window 标题栏:
 >
 	:set title titlestring=%<%f\ %([%{Tlist_Get_Tagname_By_Line()}]%)
 <
-Note that the current tag name can be displayed only after the file is
-processed by the taglist plugin. For this, you have to either set the
-'Tlist_Process_File_Always' variable to 1 or open the taglist window or use
-the taglist menu. For more information about configuring the Vim status line,
-refer to the documentation for the Vim |'statusline'| option.
+Note 一点 显示当前 tag 名称到上述位置，当前文件必须经过
+taglist 插件处理. 实现这个功能, 你必须设置
+'Tlist_Process_File_Always' 参数为 1 或者 打开 taglist 窗口 或者 使用
+taglist 菜单. 想得到更多配置 Vim 状态栏的信息,
+参考 Vim |'statusline'| 选择的文档.
 
-Changing the taglist window highlighting~
-The following Vim highlight groups are defined and used to highlight the
-various entities in the taglist window:
+更改 taglist 窗口高亮~
+以下 Vim 高亮 (函数？命令？)组 已由 taglist 预定义 并用于高亮
+在 taglist 窗口里不同的条目:
 
-    TagListTagName  - Used for tag names
-    TagListTagScope - Used for tag scope
-    TagListTitle    - Used for tag titles
-    TagListComment  - Used for comments
-    TagListFileName - Used for filenames
+    TagListTagName  - 用于 tag 名称
+    TagListTagScope - 用于 tag 作用域
+    TagListTitle    - 用于 tag 标题
+    TagListComment  - 用于 注释
+    TagListFileName - 用于 文件名
 
-By default, these highlight groups are linked to the standard Vim highlight
-groups. If you want to change the colors used for these highlight groups,
-prefix the highlight group name with 'My' and define it in your .vimrc or
-.gvimrc file: MyTagListTagName, MyTagListTagScope, MyTagListTitle,
-MyTagListComment and MyTagListFileName.  For example, to change the colors
-used for tag names, you can use the following command:
+默认情况下, 这些高亮组已经关联到 Vim 的标准高亮
+组中. 如果你想更改这些高亮组的颜色,
+在高亮组名称前添加 'My' 前缀并在你的 .vimrc 或者
+.gvimrc 文件里设置: MyTagListTagName, MyTagListTagScope, MyTagListTitle,
+MyTagListComment 和 MyTagListFileName.  举个例子, 改变
+tag 名称高亮, 你可以用以下命令:
 >
     :highlight MyTagListTagName guifg=blue ctermfg=blue
 <
-Controlling the taglist window~
-To use a horizontally split taglist window, instead of a vertically split
-window, set the 'Tlist_Use_Horiz_Window' variable to 1.
+控制 taglist 窗口~
+你想使用水平分割的 taglist 窗口, 而不是垂直分割的
+窗口, 设置 'Tlist_Use_Horiz_Window' 参数为 1.
 
-To use a vertically split taglist window on the rightmost side of the Vim
-window, set the 'Tlist_Use_Right_Window' variable to 1.
+在 Vim 最右边的窗口打开一个垂直分割 taglist 窗口，
+设置 'Tlist_Use_Right_Window' 参数为 1.
 
-You can specify the width of the vertically split taglist window, by setting
-the 'Tlist_WinWidth' variable.  You can specify the height of the horizontally
-split taglist window, by setting the 'Tlist_WinHeight' variable.
+你可以指定垂直分割 taglist 窗口的宽度, 通过设置
+'Tlist_WinWidth' 参数.  你可以指定垂直分割 taglist 窗口的高度,
+ 通过设置 'Tlist_WinHeight' 参数.
 
-When opening a vertically split taglist window, the Vim window width is
-increased to accommodate the new taglist window. When the taglist window is
-closed, the Vim window is reduced. To disable this, set the
-'Tlist_Inc_Winwidth' variable to zero.
+当打开一个垂直分割的 taglist 窗口时, Vim 窗口宽度会
+增加以容纳新打开的 taglist 窗口. 当 taglist 窗口
+关闭时, Vim 窗口宽度会减少. 禁用这个功能, 设置
+'Tlist_Inc_Winwidth' 参数为 0.
 
-To reduce the number of empty lines in the taglist window, set the
-'Tlist_Compact_Format' variable to 1.
+减少在 taglist 窗口里空白的行数, 设置
+'Tlist_Compact_Format' 参数为 1.
 
-To not display the Vim fold column in the taglist window, set the
-'Tlist_Enable_Fold_Column' variable to zero.
+在 taglist 窗口里 不显示 Vim 折叠(功能)列 , 设置
+'Tlist_Enable_Fold_Column' 参数为 0.
 
-To display the tag prototypes instead of the tag names in the taglist window,
-set the 'Tlist_Display_Prototype' variable to 1.
+在 taglist 窗口里 显示 tag 原型结构而不是 tag 名称 ,
+设置 'Tlist_Display_Prototype' 参数为 1.
 
-To not display the scope of the tags next to the tag names, set the
-'Tlist_Display_Tag_Scope' variable to zero.
+不想在 tag 名称旁显示 tag 的作用域, 设置
+'Tlist_Display_Tag_Scope' 参数为 0.
 
 						*taglist-keys*
-Taglist window key list~
-The following table lists the description of the keys that can be used
-in the taglist window.
+Taglist 窗口按键列表~
+以下列表 罗列了在 taglist 窗口里可用按键的
+功能描述.
 
-  Key           Description~
+  按键          描述~
 
-  <CR>          Jump to the location where the tag under cursor is
-                defined.
-  o             Jump to the location where the tag under cursor is
-                defined in a new window.
+  <CR>          跳转到光标所在 tag 定义的位置
+  o             打开新窗口并跳转到光标所在 tag 定义的位置
   P             Jump to the tag in the previous (Ctrl-W_p) window.
   p             Display the tag definition in the file window and
-                keep the cursor in the taglist window itself.
-  t             Jump to the tag in a new tab. If the file is already
-                opened in a tab, move to that tab.
-  Ctrl-t	Jump to the tag in a new tab.
-  <Space>       Display the prototype of the tag under the cursor.
-  		For file names, display the full path to the file,
-		file type and the number of tags. For tag types, display the
-		tag type and the number of tags.
-  u             Update the tags listed in the taglist window
-  s             Change the sort order of the tags (by name or by order)
-  d             Remove the tags for the file under the cursor
-  x             Zoom-in or Zoom-out the taglist window
-  +             Open a fold
-  -             Close a fold
-  *             Open all folds
-  =             Close all folds
-  [[		Jump to the beginning of the previous file
-  <Backspace>	Jump to the beginning of the previous file
-  ]]		Jump to the beginning of the next file
-  <Tab>		Jump to the beginning of the next file
-  q             Close the taglist window
-  <F1>          Display help
+                keep the cursor 在 taglist 窗口里 itself.
+  t             打开一个新标签页并跳转 tag . 如果文件已经在一个
+                标签页打开, 移动到那个标签页.
+  Ctrl-t	打开一个新标签页并跳转 tag .
+  <Space>       显示光标所在 tag 的原型结构.
+  		对于文件名,显示完整的路径,文件
+		类型和 tags 的数量. 对于 tag (类型), 显示
+		tag 的类型和 tags 数量.
+  u             更新在 taglist 窗口里的 tags .
+  s             更改 tags 排列顺序 (按名称 name 或者按时间空间 order)
+  d             移除光标所在的 tag (从属于某个文件） 
+  x             绽放 taglist 窗口
+  +             展开一个折叠
+  -             关闭一个折叠
+  *             打开所有折叠
+  =             关闭所有折叠
+  [[		跳转到前一个文件开始的位置
+  <Backspace>	跳转到前一个文件开始的位置
+  ]]		跳转到下一个文件开始的位置
+  <Tab>		跳转到下一个文件开始的位置	
+  q             关闭 taglist 窗口
+  <F1>          显示帮助
 
-The above keys will work in both the normal mode and the insert mode.
+上述按键在 普通模式 和 插入模式 都能用.
 
 						*taglist-menu*
-Taglist menu~
-When using GUI Vim, the taglist plugin can display the tags defined in the
-current file in the drop-down menu and the popup menu. By default, this
-feature is turned off. To turn on this feature, set the 'Tlist_Show_Menu'
-variable to 1.
+Taglist 菜单~
+当使用 GUI Vim 时, taglist 插件能通过下拉菜单和弹出菜单来显示
+当前文件所定义的 tags . 默认情况下, 这个
+功能是关闭的. 如想打开这个功能, 设置 'Tlist_Show_Menu'
+参数为 1.
 
-You can jump to a tag by selecting the tag name from the menu. You can use the
-taglist menu independent of the taglist window i.e. you don't need to open the
-taglist window to get the taglist menu.
+你可以通过菜单选择一个 tag 名称来跳转 tag. 你使用的
+taglist 菜单是独立于 taglist 窗口的，也就是说你不须要打开
+taglist 窗口 来获得 taglist 菜单.
 
-When you switch between files/buffers, the taglist menu is automatically
-updated to display the tags defined in the current file/buffer.
+当你在多个文件/缓冲区切换时, taglist 菜单会自动更新
+显示当前文件/缓冲区所定义的 tags .
 
-The tags are grouped by their type (variables, functions, classes, methods,
-etc.) and displayed as a separate sub-menu for each type. If all the tags
-defined in a file are of the same type (e.g. functions), then the sub-menu is
-not used.
+这些 tags 是按它们的类型 (参数, 函数, 类, 方法,
+etc.)进行分组并且不同类型通过分隔符分开. 如果某个文件
+全部所定义的 tags 类型(e.g. 函数)相同, 是不会有
+分隔符的.
 
-If the number of items in a tag type submenu exceeds the value specified by
-the 'Tlist_Max_Submenu_Items' variable, then the submenu will be split into
-multiple submenus. The default setting for 'Tlist_Max_Submenu_Items' is 25.
+如果子菜单的条目超过
+'Tlist_Max_Submenu_Items' 参数所指定的值, 那么子菜单将会分离成多个子菜单. 
+'Tlist_Max_Submenu_Items' 默认值是 25.
 The first and last tag names in the submenu are used to form the submenu name.
-The menu items are prefixed by alpha-numeric characters for easy selection by
-keyboard.
+菜单条目会添加数字和字母前缀，方便通过
+键盘进行选择.
 
-If the popup menu support is enabled (the |'mousemodel'| option contains
-"popup"), then the tags menu is added to the popup menu. You can access
-the popup menu by right clicking on the GUI window.
+如果弹出菜单支持是启用的 ( |'mousemodel'| 选项包含
+"popup"), 那么 tags 菜单会添加到弹出菜单. 你可以
+在 GUI window 通过右击鼠标 访问弹出菜单.
 
-You can regenerate the tags menu by selecting the 'Tags->Refresh menu' entry.
-You can sort the tags listed in the menu either by name or by order by
-selecting the 'Tags->Sort menu by->Name/Order' menu entry.
+你可以 重新生成 tags 菜单，通过 'Tags->Refresh menu' 条目.
+你可以 让菜单里的 tags 按 名称name 或者 时间空间order 排序，
+通过选择 'Tags->Sort menu by->Name/Order' 菜单条目.
 
-You can tear-off the Tags menu and keep it on the side of the Vim window
-for quickly locating the tags.
+你可以分离出 Tags 菜单 并让它置于 Vim window 旁，
+这样你就可以快速定位 tags.
 
-Using the taglist plugin with the winmanager plugin~
-You can use the taglist plugin with the winmanager plugin. This will allow you
-to use the file explorer, buffer explorer and the taglist plugin at the same
-time in different windows. To use the taglist plugin with the winmanager
-plugin, set 'TagList' in the 'winManagerWindowLayout' variable. For example,
-to use the file explorer plugin and the taglist plugin at the same time, use
-the following setting: >
+让 taglist 插件 和 winmanager 插件协同工作~
+你可以让 taglist 插件 和 winmanager 插件协同工作. 这样允许你同时在不同的窗口
+使用文件浏览器, 缓冲区浏览器和 taglist 插件 .
+同时使用 taglist 插件 和 winmanager
+插件,  在 'winManagerWindowLayout' 参数里设置 'TagList'. 
+举个例子,同时使用文件浏览器插件和 taglist 插件, 使用
+以下设置: >
 
 	let winManagerWindowLayout = 'FileExplorer|TagList'
 <
-Getting help~
-If you have installed the taglist help file (this file), then you can use the
-Vim ":help taglist-<keyword>" command to get help on the various taglist
-topics.
+获取帮助~
+如果你安装了 taglist 帮助文件 (就是这个文件), 那么你可以用使用
+Vim ":help taglist-<keyword>" 命令来获取 taglist 各种不同
+主题的帮助.
 
-You can press the <F1> key in the taglist window to display the help
-information about using the taglist window. If you again press the <F1> key,
-the help information is removed from the taglist window.
+你可以在 taglist 窗口里按 <F1> 键 来显示
+关于使用 taglist 窗口的帮助信息. 如果你再次按 <F1> 键,
+这些帮助信息就会从 taglist 窗口里移除.
 
 						*taglist-debug*
-Debugging the taglist plugin~
-You can use the ":TlistDebug" command to enable logging of the debug messages
-from the taglist plugin. To display the logged debug messages, you can use the
-":TlistMessages" command. To disable the logging of the debug messages, use
-the ":TlistUndebug" command.
+Debugging taglist 插件~
+在 taglist 插件里你可以使用 ":TlistDebug" 命令来启用除错信息记录.
+显示已记录的除错信息, 你可以用
+":TlistMessages" 命令.禁用除错信息记录, 使用
+":TlistUndebug" 命令.
 
-You can specify a file name to the ":TlistDebug" command to log the debug
-messages to a file. Otherwise, the debug messages are stored in a script-local
-variable. In the later case, to minimize memory usage, only the last 3000
-characters from the debug messages are stored.
+你可以用 ":TlistDebug" 命令 指定一个文件来记录除错
+信息. 否则, 这些除错信息会记录在一个局部脚本的参数里.
+权衡弊利, 为最小化内在占用, 只有最后 3000
+字节 debug 信息会保存.
 
 ==============================================================================
 						*taglist-options*
-6. Options~
+6. 选项~
 
-A number of Vim variables control the behavior of the taglist plugin. These
-variables are initialized to a default value. By changing these variables you
-can change the behavior of the taglist plugin. You need to change these
-settings only if you want to change the behavior of the taglist plugin. You
-should use the |:let| command in your .vimrc file to change the setting of any
-of these variables.
+以下 Vim 参数可以控制 taglist 插件的运行状态. 
+这些参数会初始化为默认值. 改变这些参数你就
+可以改变 taglist 插件运行状态. 你想改变 taglist 插件运行状态
+才需要更改设置. 你
+应该在你的 .vimrc 文件应，使用 |:let| 命令来更改
+这些参数.
 
-The configurable taglist variables are listed below. For a detailed
-description of these variables refer to the text below this table.
+可配置的 taglist 参数罗列在下面。 想了解
+这些参数的功能描述参考以下在列表中的文本.
 
-|'Tlist_Auto_Highlight_Tag'|	Automatically highlight the current tag in the
-				taglist.
-|'Tlist_Auto_Open'|		Open the taglist window when Vim starts.
-|'Tlist_Auto_Update'|		Automatically update the taglist to include
-				newly edited files.
-|'Tlist_Close_On_Select'|	Close the taglist window when a file or tag is
-				selected.
-|'Tlist_Compact_Format'|	Remove extra information and blank lines from
-       				the taglist window.
-|'Tlist_Ctags_Cmd'|		Specifies the path to the ctags utility.
-|'Tlist_Display_Prototype'|	Show prototypes and not tags in the taglist
-				window.
-|'Tlist_Display_Tag_Scope'|	Show tag scope next to the tag name.
-|'Tlist_Enable_Fold_Column'|	Show the fold indicator column in the taglist
-				window.
-|'Tlist_Exit_OnlyWindow'|	Close Vim if the taglist is the only window.
-|'Tlist_File_Fold_Auto_Close'|	Close tag folds for inactive buffers.
+|'Tlist_Auto_Highlight_Tag'|	在 tgalist 里自动高亮当前 tag.
+|'Tlist_Auto_Open'|		当 Vim 启动时 打开 taglist 窗口.
+|'Tlist_Auto_Update'|		新加入编辑文件时自动更新 taglist .
+|'Tlist_Close_On_Select'|	选择完一个文件或者 tag 后自动关闭 Taglist 窗口.
+|'Tlist_Compact_Format'|	移除 在 taglist 窗口里额外的信息和空白行。
+|'Tlist_Ctags_Cmd'|		指定 ctags 工具所在目录.
+|'Tlist_Display_Prototype'|	在 Taglist 窗口里显示 Tag 原型结构
+|'Tlist_Display_Tag_Scope'|	在 tag 名称后显示其作用域.
+|'Tlist_Enable_Fold_Column'|	在taglist 窗口里显示折叠指示列 .
+|'Tlist_Exit_OnlyWindow'|	taglist 窗口是唯一窗口时关闭 Vim.
+|'Tlist_File_Fold_Auto_Close'|	非激活缓冲区 自动折起 tag 折叠.
 |'Tlist_GainFocus_On_ToggleOpen'|
-				Jump to taglist window on open.
+				Taglist 窗口打开时将光标移过去.
 |'Tlist_Highlight_Tag_On_BufEnter'|
-				On entering a buffer, automatically highlight
-				the current tag.
-|'Tlist_Inc_Winwidth'|		Increase the Vim window width to accommodate
-				the taglist window.
-|'Tlist_Max_Submenu_Items'|	Maximum number of items in a tags sub-menu.
-|'Tlist_Max_Tag_Length'|	Maximum tag length used in a tag menu entry.
-|'Tlist_Process_File_Always'|	Process files even when the taglist window is
-				closed.
-|'Tlist_Show_Menu'|		Display the tags menu.
-|'Tlist_Show_One_File'|		Show tags for the current buffer only.
-|'Tlist_Sort_Type'|		Sort method used for arranging the tags.
-|'Tlist_Use_Horiz_Window'|	Use a horizontally split window for the
-				taglist window.
-|'Tlist_Use_Right_Window'|	Place the taglist window on the right side.
-|'Tlist_Use_SingleClick'|	Single click on a tag jumps to it.
-|'Tlist_WinHeight'|		Horizontally split taglist window height.
-|'Tlist_WinWidth'|		Vertically split taglist window width.
+				进入一个缓冲区时, 自动高亮当前 tag .
+|'Tlist_Inc_Winwidth'|		增加 Vim 窗口的宽度去容纳 taglist 窗口.
+|'Tlist_Max_Submenu_Items'|	tag 子菜单最大条目数.
+|'Tlist_Max_Tag_Length'|	tag 菜单条目最大长度.
+|'Tlist_Process_File_Always'|	即使 taglist 窗口是关闭的也进行文件处理 
+|'Tlist_Show_Menu'|		显示 tags 菜单.
+|'Tlist_Show_One_File'|		只显示当前缓冲区文件 tag .
+|'Tlist_Sort_Type'|		排序 tags 的方式.
+|'Tlist_Use_Horiz_Window'|	使用水平分割的 Taglist 窗口.
+|'Tlist_Use_Right_Window'|	Taglist 窗口屏幕左边打开.
+|'Tlist_Use_SingleClick'|	单击跳转 tag .
+|'Tlist_WinHeight'|		水平分割 taglist 窗口 的高度.
+|'Tlist_WinWidth'|		垂直分割 taglist 窗口 的宽度.
 
 						*'Tlist_Auto_Highlight_Tag'*
 Tlist_Auto_Highlight_Tag~
-The taglist plugin will automatically highlight the current tag in the taglist
-window. If you want to disable this, then you can set the
-'Tlist_Auto_Highlight_Tag' variable to zero. Note that even though the current
-tag highlighting is disabled, the tags for a new file will still be added to
-the taglist window.
+taglist 插件 在 taglist 窗口里自动高亮当前 tag .
+如果你想禁用这功能, 那么你可以设置
+'Tlist_Auto_Highlight_Tag' 参数为 0. Note 就算当前
+tag 高亮是禁用的, 新文件的 tags 仍会添加到
+taglist 窗口里.
 >
 	let Tlist_Auto_Highlight_Tag = 0
 <
-With the above variable set to 1, you can use the ":TlistHighlightTag" command
-to highlight the current tag.
+以上参数为 1 时, 你可以用 ":TlistHighlightTag" 命令
+来高这当前的 tag.
 
 						*'Tlist_Auto_Open'*
 Tlist_Auto_Open~
-To automatically open the taglist window, when you start Vim, you can set the
-'Tlist_Auto_Open' variable to 1. By default, this variable is set to zero and
-the taglist window will not be opened automatically on Vim startup.
+ 当你启动 Vim 时,自动打开 taglist 窗口, 你可以设置
+'Tlist_Auto_Open' 参数为 1. 默认情况下,这个参数是设为 0,
+taglist 窗口 将不会在 Vim 启动时自动打开.
 >
 	let Tlist_Auto_Open = 1
 <
-The taglist window is opened only when a supported type of file is opened on
-Vim startup. For example, if you open text files, then the taglist window will
-not be opened.
+taglist 窗口只有在文件类型支持时才会在 Vim 启动时自动打开。
+举个例子, 如果你打开 text 文件, taglist 窗口 是
+不会打开的.
 
 						*'Tlist_Auto_Update'*
 Tlist_Auto_Update~
-When a new file is edited, the tags defined in the file are automatically
-processed and added to the taglist. To stop adding new files to the taglist,
-set the 'Tlist_Auto_Update' variable to zero. By default, this variable is set
-to 1.
+当编辑一个新文件时, 定义在文件里的 tags 会自动被
+处理然后添加到 taglist 里.要停止添加新文件到 taglist 里,
+设置 'Tlist_Auto_Update' 参数为 0. 默认情况下, 这个参数设为
+ 1.
 >
 	let Tlist_Auto_Update = 0
 <
-With the above variable set to 1, you can use the ":TlistUpdate" command to
-add the tags defined in the current file to the taglist.
+以上参数为 1 时, 你可以用 the ":TlistUpdate" 命令 
+添加当前文件定义的 tags 到 taglist里.
 
 						*'Tlist_Close_On_Select'*
 Tlist_Close_On_Select~
-If you want to close the taglist window when a file or tag is selected, then
-set the 'Tlist_Close_On_Select' variable to 1. By default, this variable is
-set zero and when you select a tag or file from the taglist window, the window
-is not closed.
+选完一个文件和 tag 后自动关闭 窗口 , 那么
+设置 'Tlist_Close_On_Select' 参数为 1. 默认情况下, 这个参数
+设置为 0 也就是说，当你在 taglist 窗口里选完一个文件或者 tag 后, 窗口
+是不关闭的.
 >
 	let Tlist_Close_On_Select = 1
 <
 						*'Tlist_Compact_Format'*
 Tlist_Compact_Format~
-By default, empty lines are used to separate different tag types displayed for
-a file and the tags displayed for different files in the taglist window. If
-you want to display as many tags as possible in the taglist window, you can
-set the 'Tlist_Compact_Format' variable to 1 to get a compact display.
+默认情况下,在 taglist 窗口里 空行是用来分隔一个文件不同类型的 tag 
+或者不同文件的 tag . 如果
+你想在 taglist 窗口里显示尽可能多的 tags, 你可以
+设置 'Tlist_Compact_Format' 参数为 1 来获得紧凑的显示方式.
 >
 	let Tlist_Compact_Format = 1
 <
 						*'Tlist_Ctags_Cmd'*
 Tlist_Ctags_Cmd~
-The 'Tlist_Ctags_Cmd' variable specifies the location (path) of the exuberant
-ctags utility. If exuberant ctags is present in any one of the directories in
-the PATH environment variable, then there is no need to set this variable.
+'Tlist_Ctags_Cmd' 变量用于指定 exuberantctags 
+位置和路径. 如果 exuberant ctags 在操作系统
+PATH 环境变量所指定的任意一个目录下, 那么这个变量是不须要设置的.
 
-The exuberant ctags tool can be installed under different names.  When the
-taglist plugin starts up, if the 'Tlist_Ctags_Cmd' variable is not set, it
-checks for the names exuberant-ctags, exctags, ctags, ctags.exe and tags in
-the PATH environment variable.  If any one of the named executable is found,
-then the Tlist_Ctags_Cmd variable is set to that name.
+exuberant ctags 工具可以用不同的名称进行安装. 当 
+taglist 插件启动时, 如果 'Tlist_Ctags_Cmd' 参数没有设定, 它会
+检测 exuberant-ctags, exctags, ctags, ctags.exe and tags 在
+PATH 环境变量指定的路径里. 如果找到上述命名的 executable ,
+那么 Tlist_Ctags_Cmd 参数会设置为上述名称.
 
-If exuberant ctags is not present in one of the directories specified in the
-PATH environment variable, then set this variable to point to the location of
-the ctags utility in your system. Note that this variable should point to the
-fully qualified exuberant ctags location and NOT to the directory in which
-exuberant ctags is installed. If the exuberant ctags tool is not found in
-either PATH or in the specified location, then the taglist plugin will not be
-loaded. Examples:
+如果 exuberant ctags 不在操作系统
+PATH 环境变量所指定的任意一个目录下, 那么要将此参数为 
+ctags 工具在你系统中具体的位置. Note that 这个参数应设为
+exuberant ctags 完整的路径和文件名 而不是
+exuberant ctags 安装路径. 如果 exuberant ctags 工具没有在
+ PATH 或者指定位置找到, 那么 taglist 插件 将不会
+加载. 示例:
 >
 	let Tlist_Ctags_Cmd = 'd:\tools\ctags.exe'
 	let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
 <
 						*'Tlist_Display_Prototype'*
 Tlist_Display_Prototype~
-By default, only the tag name will be displayed in the taglist window. If you
-like to see tag prototypes instead of names, set the 'Tlist_Display_Prototype'
-variable to 1. By default, this variable is set to zero and only tag names
-will be displayed.
+默认情况下,  在 taglist 窗口里只会显示 tag 名称. 如果你想
+显示原型结构而不是名称, 设置 'Tlist_Display_Prototype'
+参数为 1. 默认情况下, 这个参数是设置为 0 也就是说只会显示
+tag 名称.
 >
 	let Tlist_Display_Prototype = 1
 <
 						*'Tlist_Display_Tag_Scope'*
 Tlist_Display_Tag_Scope~
-By default, the scope of a tag (like a C++ class) will be displayed in
-square brackets next to the tag name. If you don't want the tag scopes
-to be displayed, then set the 'Tlist_Display_Tag_Scope' to zero. By default,
-this variable is set to 1 and the tag scopes will be displayed.
+默认情况下, tag (如一个 C++ 类) 的作用域 会在
+ tag 名称后显示并用方括号包裹. 如果你不想显示 tag 
+和作用域, 那么 设置 'Tlist_Display_Tag_Scope' 为 0 . 默认情况下,
+这个参数是设置为 1 也就是说会显示 tag 的作用域.
 >
 	let Tlist_Display_Tag_Scope = 0
 <
 						*'Tlist_Enable_Fold_Column'*
 Tlist_Enable_Fold_Column~
-By default, the Vim fold column is enabled and displayed in the taglist
-window. If you wish to disable this (for example, when you are working with a
-narrow Vim window or terminal), you can set the 'Tlist_Enable_Fold_Column'
-variable to zero.
+默认情况下, Vim 折叠指示列会启用并在 taglist
+窗口里显示. 如果你想禁用这个功能 (举个例子, 你正用一个比较窄的
+Vim 窗口 或者 终端工作), 你可以设置 'Tlist_Enable_Fold_Column'
+参数为 0 .
 >
 	let Tlist_Enable_Fold_Column = 1
 <
 						*'Tlist_Exit_OnlyWindow'*
 Tlist_Exit_OnlyWindow~
-If you want to exit Vim if only the taglist window is currently opened, then
-set the 'Tlist_Exit_OnlyWindow' variable to 1. By default, this variable is
-set to zero and the Vim instance will not be closed if only the taglist window
-is present.
+如果只剩下一个打开的 taglist 窗口 自动关闭 Vim , 那么
+设置 'Tlist_Exit_OnlyWindow' 参数为 1. 默认情况下, 这个参数是设置为
+0 也就是说如果只剩下一个打开的 taglist 窗口 Vim 
+是不会立即关闭的.
 >
 	let Tlist_Exit_OnlyWindow = 1
 <
 						*'Tlist_File_Fold_Auto_Close'*
 Tlist_File_Fold_Auto_Close~
-By default, the tags tree displayed in the taglist window for all the files is
-opened. You can close/fold the tags tree for the files manually. To
-automatically close the tags tree for inactive files, you can set the
-'Tlist_File_Fold_Auto_Close' variable to 1. When this variable is set to 1,
-the tags tree for the current buffer is automatically opened and for all the
-other buffers is closed.
+默认情况下, 所有打开文件 tags 目录树是显示在 taglist 窗口里。 
+你可以手工 展开/折起 某个文件 tags 目录树 . 如想
+自动折起非激活文件 tags 目录树, 你可以设置
+'Tlist_File_Fold_Auto_Close' 参数为 1. 当这个参数是设置为 1 时,
+当前缓冲区文件的 tags 目录树会自动打开，
+其它缓冲区文件的则会关闭.
 >
 	let Tlist_File_Fold_Auto_Close = 1
 <
 					    *'Tlist_GainFocus_On_ToggleOpen'*
 Tlist_GainFocus_On_ToggleOpen~
-When the taglist window is opened using the ':TlistToggle' command, this
-option controls whether the cursor is moved to the taglist window or remains
-in the current window. By default, this option is set to 0 and the cursor
-remains in the current window. When this variable is set to 1, the cursor
-moves to the taglist window after opening the taglist window.
+当 taglist 窗口 使用 ':TlistToggle' 命令打开时, 这个
+选项 控制光标是否移动到 taglist 窗口或者停留在
+当前窗口. 默认情况下, 这个选项设置为 0 也就是光标
+保留在当前窗口. 当这个参数是设置为 1, 光标
+在打开 taglist 窗口后移动到 taglist 窗口.
 >
 	let Tlist_GainFocus_On_ToggleOpen = 1
 <
 					    *'Tlist_Highlight_Tag_On_BufEnter'*
 Tlist_Highlight_Tag_On_BufEnter~
-When you enter a Vim buffer/window, the current tag in that buffer/window is
-automatically highlighted in the taglist window. If the current tag name is
-not visible in the taglist window, then the taglist window contents are
-scrolled to make that tag name visible. If you like to disable the automatic
-highlighting of the current tag when entering a buffer, you can set the
-'Tlist_Highlight_Tag_On_BufEnter' variable to zero. The default setting for
-this variable is 1.
+当你进入 一个 Vim 缓冲区/窗口, 在缓冲区/窗口当前的 tag 会
+在 taglist 窗口里自动高亮显示. 如果当前 tag 名称
+在 taglist 窗口里不可见, 那么 taglist 窗口内容会上下
+卷动使 tag 名称可见. 如果你想关闭 进入缓冲后自动
+高亮当前 tag 的功能, 你可以 设置
+'Tlist_Highlight_Tag_On_BufEnter' 参数为 zero. 
+这个参数是默认设置为 1.
 >
 	let Tlist_Highlight_Tag_On_BufEnter = 0
 <
 						*'Tlist_Inc_Winwidth'*
 Tlist_Inc_Winwidth~
-By default, when the width of the window is less than 100 and a new taglist
-window is opened vertically, then the window width is increased by the value
-set in the 'Tlist_WinWidth' variable to accommodate the new window. The value
-of this variable is used only if you are using a vertically split taglist
-window.
+默认情况下, 当窗口宽度小于100时，新打开的 taglist
+窗口为垂直分割的窗口, 那么窗口宽度会按
+ 'Tlist_WinWidth' 所设置的参数值扩展成一个新的窗口. 
+只有你使用垂直分割的 taglist 窗口时
+才能设置这个参数.
 
-If your terminal doesn't support changing the window width from Vim (older
-version of xterm running in a Unix system) or if you see any weird problems in
-the screen due to the change in the window width or if you prefer not to
-adjust the window width then set the 'Tlist_Inc_Winwidth' variable to zero.
-CAUTION: If you are using the MS-Windows version of Vim in a MS-DOS command
-window then you must set this variable to zero, otherwise the system may hang
-due to a Vim limitation (explained in :help win32-problems)
+如果的你终端 (运行在 Unix 系统下较早
+版本的 xterm ) 不支持从 Vim 改变窗口宽度 或者 更改窗口宽度后
+你可能在屏幕看见任何奇怪问题 或者 你不情愿
+调整窗口的宽度 那么设置 'Tlist_Inc_Winwidth' 参数为 zero.
+注意: 如果你是在 MS－DOS 命令窗口下保用 MS-Windows 版本的 Vim
+那么你必须设置这个参数为 0 , 否则系统可能会挂起
+原因  Vim 的限制 (帮助里有解释 :help win32-problems)
 >
 	let Tlist_Inc_Winwidth = 0
 <
 						*'Tlist_Max_Submenu_Items'*
 Tlist_Max_Submenu_Items~
-If a file contains too many tags of a particular type (function, variable,
-class, etc.), greater than that specified by the 'Tlist_Max_Submenu_Items'
-variable, then the menu for that tag type will be split into multiple
-sub-menus. The default setting for the 'Tlist_Max_Submenu_Items' variable is
-25.  This can be changed by setting the 'Tlist_Max_Submenu_Items' variable:
+如果一个文件包含太多特定类型(函数,函数,
+类, etc.)的 tags , 数目多过 'Tlist_Max_Submenu_Items' 参数所指定的
+数量, 那么这个类型的 tag 的菜单会分割成多个
+子菜单. 'Tlist_Max_Submenu_Items' 参数默认设置是
+25.  以下命令可以改变 'Tlist_Max_Submenu_Items' 参数:
 >
 	let Tlist_Max_Submenu_Items = 20
 <
-The name of the submenu is formed using the names of the first and the last
-tag entries in that submenu.
+子菜单的名称由那个子菜单 tag 
+第一个和最后一个条目的名称组成.
 
 						*'Tlist_Max_Tag_Length'*
 Tlist_Max_Tag_Length~
-Only the first 'Tlist_Max_Tag_Length' characters from the tag names will be
-used to form the tag type submenu name. The default value for this variable is
-10.  Change the 'Tlist_Max_Tag_Length' setting if you want to include more or
-less characters:
+只有 'Tlist_Max_Tag_Length' 设置的字母数  from the tag names will be
+used to form the tag type submenu name. 这个参数是默认设置为
+10.  改变 'Tlist_Max_Tag_Length' 这个设置 可以让你的菜单显示更多或者
+更少的字母:
 >
 	let Tlist_Max_Tag_Length = 10
 <
 						*'Tlist_Process_File_Always'*
 Tlist_Process_File_Always~
-By default, the taglist plugin will generate and process the tags defined in
-the newly opened files only when the taglist window is opened or when the
-taglist menu is enabled. When the taglist window is closed, the taglist plugin
-will stop processing the tags for newly opened files.
+默认情况下, 当 taglist 窗口打开状态 或者 taglist 菜单启用状态 
+taglist 插件才会生成和处理新打开的文件里定义的 tags .
+当 taglist 窗口是关闭状态, taglist 插件
+会停止处理新打开文件里定义的 tag .
 
-You can set the 'Tlist_Process_File_Always' variable to 1 to generate the list
-of tags for new files even when the taglist window is closed and the taglist
-menu is disabled.
+你可以 设置 'Tlist_Process_File_Always' 参数为 1，
+即使 taglist 窗口关闭状态 和 taglist 菜单没有启用 
+taglist 也会生成
+新文件的 tag 列表。 
 >
 	let Tlist_Process_File_Always = 1
 <
-To use the ":TlistShowTag" and the ":TlistShowPrototype" commands without the
-taglist window and the taglist menu, you should set this variable to 1.
+如果你想不打开taglist 窗口或者 taglist 菜单就正常 
+使用 ":TlistShowTag" 和 ":TlistShowPrototype" 命令,
+你应该设置这个参数为 1.
 
 						*'Tlist_Show_Menu'*
 Tlist_Show_Menu~
-When using GUI Vim, you can display the tags defined in the current file in a
-menu named "Tags". By default, this feature is turned off. To turn on this
-feature, set the 'Tlist_Show_Menu' variable to 1:
+当使用 GUI Vim, 你可以在名为 "Tags" 的菜单显示定义在文件里
+的 tag . 默认情况下, 这个功能是关闭的. 打开这个
+功能, 设置 'Tlist_Show_Menu' 参数为 1:
 >
 	let Tlist_Show_Menu = 1
 <
 						*'Tlist_Show_One_File'*
 Tlist_Show_One_File~
-By default, the taglist plugin will display the tags defined in all the loaded
-buffers in the taglist window. If you prefer to display the tags defined only
-in the current buffer, then you can set the 'Tlist_Show_One_File' to 1. When
-this variable is set to 1, as you switch between buffers, the taglist window
-will be refreshed to display the tags for the current buffer and the tags for
-the previous buffer will be removed.
+默认情况下, taglist 插件会在 taglist 窗口里显示
+所有加载到缓冲区文件里定义的 tags 
+如果你只想显示当前缓冲区文件
+的 tag , 那么你可以设置 'Tlist_Show_One_File' 为 1. 当
+这个参数是设置为 1 时, 你切换缓冲区里的文件时, taglist 窗口
+会刷新显示当前文件的 tags 
+之前文件的 tags 会被移除.
 >
 	let Tlist_Show_One_File = 1
 <
 						*'Tlist_Sort_Type'*
 Tlist_Sort_Type~
-The 'Tlist_Sort_Type' variable specifies the sort order for the tags in the
-taglist window. The tags can be sorted either alphabetically by their name or
-by the order of their appearance in the file (chronological order). By
-default, the tag names will be listed by the order in which they are defined
-in the file. You can change the sort type (from name to order or from order to
-name) by pressing the "s" key in the taglist window. You can also change the
-default sort order by setting 'Tlist_Sort_Type' to "name" or "order":
+这个 'Tlist_Sort_Type' 参数指定 tags 在taglist 窗口排序方式.
+ tags 可以按 它们的名称首字母进行排序或者
+按 tag 在文件中出现的顺序进行排序 (时间空间顺序). 
+默认情况下, tag 名称会按 tag 在文件中出现的顺序进行排序. 
+你 在 taglist 窗口里可以按 "s" 键改变排序方式 
+(从名称到时间或者从时间到名称) . 你也可以改变
+默认排序方式，通过设置 'Tlist_Sort_Type' 为 "name" 或者 "order":
 >
 	let Tlist_Sort_Type = "name"
 <
 						*'Tlist_Use_Horiz_Window'*
 Tlist_Use_Horiz_Window~
-Be default, the tag names are displayed in a vertically split window. If you
-prefer a horizontally split window, then set the 'Tlist_Use_Horiz_Window'
-variable to 1. If you are running MS-Windows version of Vim in a MS-DOS
-command window, then you should use a horizontally split window instead of a
-vertically split window. Also, if you are using an older version of xterm in a
-Unix system that doesn't support changing the xterm window width, you should
-use a horizontally split window.
+默认情况下, tag 名称会显示在一个垂直分割的窗口里. 如果你
+想使用水平分割的窗口, 当时设置 'Tlist_Use_Horiz_Window'
+参数为 1. 如果你在 MS-DOS 命令窗口下运行 MS-Windows 版本的 Vim,
+那么你应该使用一个水平分割的窗口而不是垂直分割的窗口。
+同理, 如果你使用在 Unix 系统里使用一个较早版本的 xterm 
+并且 Unix 不支持改变 xterm 窗口宽度,  你应该使用
+一个水平分割的窗口.
 >
 	let Tlist_Use_Horiz_Window = 1
 <
 						*'Tlist_Use_Right_Window'*
 Tlist_Use_Right_Window~
-By default, the vertically split taglist window will appear on the left hand
-side. If you prefer to open the window on the right hand side, you can set the
-'Tlist_Use_Right_Window' variable to 1:
+默认情况下, 垂直分割的 taglist 窗口 会出现在左手边。
+如果你想打开窗口时出现在右手边, 你可以设置
+'Tlist_Use_Right_Window' 参数为 1:
 >
 	let Tlist_Use_Right_Window = 1
 <
 						*'Tlist_Use_SingleClick'*
 Tlist_Use_SingleClick~
-By default, when you double click on the tag name using the left mouse
-button, the cursor will be positioned at the definition of the tag. You
-can set the 'Tlist_Use_SingleClick' variable to 1 to jump to a tag when
-you single click on the tag name using the mouse. By default this variable
-is set to zero.
+默认情况下, 当你使用鼠标左键双击一个 tag 名称时,
+光标会跳转到这个 tag 在文件里定义的位置.
+你可以设置 'Tlist_Use_SingleClick' 参数为 1， 
+然后可以使用鼠标单击一个 tag 名称跳转. 默认情况下这个参数
+是设置为 0 .
 >
 	let Tlist_Use_SingleClick = 1
 <
-Due to a bug in Vim, if you set 'Tlist_Use_SingleClick' to 1 and try to resize
-the taglist window using the mouse, then Vim will crash. This problem is fixed
-in Vim 6.3 and above. In the meantime, instead of resizing the taglist window
-using the mouse, you can use normal Vim window resizing commands to resize the
-taglist window.
+源于 Vim 的一个 bug , 如果你设置 'Tlist_Use_SingleClick' 为 1 并尝试使用鼠标
+调整 taglist 窗口大小时, Vim会崩溃. 这个问题在
+ Vim 6.3 或者以后的版本得到解决. 同时,使用鼠标
+调整 taglist 窗口大小, 你可以用普通的 Vim 命令来调整
+taglist 窗口大小.
 
 						*'Tlist_WinHeight'*
 Tlist_WinHeight~
-The default height of the horizontally split taglist window is 10. This can be
-changed by modifying the 'Tlist_WinHeight' variable:
+水平分割的 taglist 窗口默认高度是 10. 这是可以
+更改的，通过调整 'Tlist_WinHeight' 参数:
 >
 	let Tlist_WinHeight = 20
 <
-The |'winfixheight'| option is set for the taglist window, to maintain the
-height of the taglist window, when new Vim windows are opened and existing
-windows are closed.
+ |'winfixheight'| 选项专为 taglist 窗口设定, 
+ 当打开新的 Vim 窗口或者已存在的窗口关闭时用于保持
+ taglist 窗口高度 .
 
 						*'Tlist_WinWidth'*
 Tlist_WinWidth~
-The default width of the vertically split taglist window is 30. This can be
-changed by modifying the 'Tlist_WinWidth' variable:
+垂直分割的 taglist 窗口默认宽度 is 30. This  这是可以
+更改的，通过调整 'Tlist_WinWidth' 参数:
 >
 	let Tlist_WinWidth = 20
 <
-Note that the value of the |'winwidth'| option setting determines the minimum
-width of the current window. If you set the 'Tlist_WinWidth' variable to a
-value less than that of the |'winwidth'| option setting, then Vim will use the
-value of the |'winwidth'| option.
+Note that  |'winwidth'| 选择的值 决定
+当前窗口最小的宽度. 如果你设置 'Tlist_WinWidth' 参数的值 
+小于 |'winwidth'| 设置的值, 那么 Vim 会使用
+ |'winwidth'| 选择的值.
 
-When new Vim windows are opened and existing windows are closed, the taglist
-plugin will try to maintain the width of the taglist window to the size
-specified by the 'Tlist_WinWidth' variable.
+当打开新的 Vim 窗口或者关闭已存在的窗口时,
+ taglist 插件会尝试保持由 
+'Tlist_WinWidth' 参数指定 taglist 窗口的大小.
 
 ==============================================================================
 						*taglist-commands*
@@ -991,15 +981,13 @@ taglist 插件提供了以下命令：
 |:TlistOpen|		打开并跳转到 taglit 窗口
 |:TlistSessionSave|	把 taglist 中的文件和 tags 的信息保存到会话文件中
 |:TlistSessionLoad|	把存储在会话文件中的文件和 tags 的信息加载到 taglist 中
-|:TlistShowPrototype|	Display the prototype of the tag at or before the
-		    	specified line number.
-|:TlistShowTag|		Display the name of the tag defined at or before the
-			specified line number.
-|:TlistHighlightTag|	Highlight the current tag in the taglist window.
-|:TlistToggle|		Open or close (toggle) the taglist window.
-|:TlistUndebug|		Stop logging of taglist debug messages.
-|:TlistUnlock|		Start adding new files to the taglist.
-|:TlistUpdate|		Update the tags for the current buffer.
+|:TlistShowPrototype|	显示某个文件指定行数或指定行数之前 tag 原型结构.
+|:TlistShowTag|		显示某个文件指定行数或指定行数之前 tag 名称.
+|:TlistHighlightTag|	在 taglist 窗口里高亮当前 tag .
+|:TlistToggle|		打开或者关闭 (切换) taglist 窗口.
+|:TlistUndebug|		停止记录 taglist 除错信息.
+|:TlistUnlock|		解锁又可以再添加新文件到 taglist 里.
+|:TlistUpdate|		更新当前缓冲区文件的 tags .
 
 						*:TlistAddFiles*
 :TlistAddFiles {file(s)} [file(s) ...]
@@ -1054,49 +1042,48 @@ taglist 插件提供了以下命令：
 
 						*:TlistSessionSave*
 :TlistSessionSave {filename}
-		Saves the information about files and tags in the taglist to
-		the specified file. This command can be used to save and
-		restore the taglist contents across Vim sessions.
+		保存指定文件的信息和 taglist 里的 tags .
+		这个命令可以用来保存和恢复在 Vim 会话期间
+		taglist 内容.
 
 						*:TlistSessionLoad*
 :TlistSessionLoad {filename}
-		Load the information about files and tags stored in the
-｀		specified session file to the taglist.
+		加载一个保存有文件和 tag 信息
+		特定的会话文件到 taglist 里.
 
 						*:TlistShowPrototype*
 :TlistShowPrototype [filename] [linenumber]
-		Display the prototype of the tag at or before the specified
-		line number. If the file name and the line number are not
-		specified, then the current file name and line number are
-		used. A tag spans multiple lines starting from the line where
-		it is defined to the line before the next tag. This command
-		displays the prototype for the tag for any line number in this
-		range.
+		显示指定行或之前 tag 的原型结构
+		如果文件名称和行数未指定，
+		那么会使用当前文件当前行。
+		一个 tag 可跨越多行从它定义的行开始
+		到下一个 tag　之前的行. 这个命令
+		显示此范围内任意行数的 tag 原型结构 
 
 						*:TlistShowTag*
 :TlistShowTag [filename] [linenumber]
-		Display the name of the tag defined at or before the specified
-		line number. If the file name and the line number are not
-		specified, then the current file name and line number are
-		used. A tag spans multiple lines starting from the line where
-		it is defined to the line before the next tag. This command
-		displays the tag name for any line number in this range.
+		显示指定行或之前 tag 的名称
+		如果文件名称和行数未指定，
+		那么会使用当前文件当前行。
+		一个 tag 可跨越多行从它定义的行开始
+		到下一个 tag　之前的行. 这个命令
+		显示此范围内任意行数的 tag 名称.
 
 						*:TlistHighlightTag*
 :TlistHighlightTag
-		Highlight the current tag in the taglist window. By default,
-		the taglist plugin periodically updates the taglist window to
-		highlight the current tag. This command can be used to force
-		the taglist plugin to highlight the current tag.
+		在 taglist 窗口里高亮显示当前 tag . 默认情况下,
+		taglist 插件定期更新 taglist 窗口来
+		高亮显示当前 tag. 这个命令可以用于强制
+		taglist 插件去高亮显示当前 tag.
 
 						*:TlistToggle*
-:TlistToggle	Open or close (toggle) the taglist window. Opens the taglist
-		window, if the window is not opened currently. Closes the
-		taglist window, if the taglist window is already opened. When
-		the taglist window is opened for the first time, all the files
-		in the buffer list are processed and the tags are displayed in
-		the taglist window. After executing this command, the cursor
-		is not moved from the current window to the taglist window.
+:TlistToggle	打开或者关闭 (切换) taglist 窗口. 
+		如果窗口是关闭的，打开taglist窗口. 
+		如果 taglist 窗口是已经打开的，关闭taglist 窗口.
+		如果 taglist 窗口 是第一次打开, 所有的 
+		在缓冲区 列表的文件都会被处理，然后 tags 会
+		显示在 taglist 窗口. 执行这命令后, 光标
+		是不会从当前窗口移动到 taglist 窗口.
 
 						*:TlistUndebug*
 :TlistUndebug
@@ -1116,165 +1103,162 @@ taglist 插件提供了以下命令：
 
 ==============================================================================
 						*taglist-functions*
-8. Global functions~
+8. 全局函数~
 
-The taglist plugin provides several global functions that can be used from
-other Vim plugins to interact with the taglist plugin. These functions are
-described below.
+Taglist 插件提供了几个全局函数可用于 taglist 插件与
+其它的 Vim 插件进行互动. 这些函数功能
+详细介绍如下.
 
-|Tlist_Update_File_Tags()|		Update the tags for the specified file
-|Tlist_Get_Tag_Prototype_By_Line()|	Return the prototype of the tag at or
-				    	before the specified line number in the
-				    	specified file.
-|Tlist_Get_Tagname_By_Line()|		Return the name of the tag at or
-					before the specified line number in
-					the specified file.
-|Tlist_Set_App()|			Set the name of the application
-					controlling the taglist window.
+|Tlist_Update_File_Tags()|		更新指定文件的 tags 
+|Tlist_Get_Tag_Prototype_By_Line()|	返回指定文件指定行数或者
+					指定行数之前 tag 的原型结构。
+|Tlist_Get_Tagname_By_Line()|		返回指定文件指定行数或者
+					指定行数之前 tag 的名称。
+|Tlist_Set_App()|			设置控制 taglist 窗口
+					应用的名称.
 
 					    *Tlist_Update_File_Tags()*
 Tlist_Update_File_Tags({filename}, {filetype})
-		Update the tags for the file {filename}. The second argument
-		specifies the Vim filetype for the file. If the taglist plugin
-		has not processed the file previously, then the exuberant
-		ctags tool is invoked to generate the tags for the file.
+		更新指定文件名 {filename}的 tag . 第二参数
+		指定 Vim 文件的文件类型. 如果 taglist 插件
+		没有事先处理文件, 那么 exuberant
+		ctags 工具临时被要求生成此文件的 tags .
 
 					    *Tlist_Get_Tag_Prototype_By_Line()*
 Tlist_Get_Tag_Prototype_By_Line([{filename}, {linenumber}])
-		Return the prototype of the tag at or before the specified
-		line number in the specified file. If the filename and line
-		number are not specified, then the current buffer name and the
-		current line number are used.
+		返回指定行或之前 tag 的原型结构
+		如果文件名称和行数未指定，
+		那么会使用当前文件当前行。
 
 					    *Tlist_Get_Tagname_By_Line()*
 Tlist_Get_Tagname_By_Line([{filename}, {linenumber}])
-		Return the name of the tag at or before the specified line
-		number in the specified file. If the filename and line number
-		are not specified, then the current buffer name and the
-		current line number are used.
+		返回指定行或之前 tag 的名称
+		如果文件名称和行数未指定，
+		那么会使用当前文件当前行
 
 					    *Tlist_Set_App()*
 Tlist_Set_App({appname})
-		Set the name of the plugin that controls the taglist plugin
-		window and buffer. This can be used to integrate the taglist
-		plugin with other Vim plugins.
+		设置控制 taglist 插件 窗口和缓冲区 插件的名称. 
+		这个函数可用于将 taglist
+		插件 和 Vim 其它插件整合在一起.
 
-		For example, the winmanager plugin and the Cream package use
-		this function and specify the appname as "winmanager" and
-		"cream" respectively.
+		举个例子, winmanager 插件和 Cream package 使用
+		这个函数时要分别地指定 appname 为 "winmanager" 和
+		"cream".
 
-		By default, the taglist plugin is a stand-alone plugin and
-		controls the taglist window and buffer. If the taglist window
-		is controlled by an external plugin, then the appname should
-		be set appropriately.
+		默认情况下, taglist 插件是独立插件，自行
+		控制 taglist 窗口和缓冲区. 如果 taglist 窗口
+		是由额外插件控制, 那么必须设置为合适的
+		appname .
 
 ==============================================================================
 						*taglist-extend*
-9. Extending~
+9.扩展~
 
-The taglist plugin supports all the languages supported by the exuberant ctags
-tool, which includes the following languages: Assembly, ASP, Awk, Beta, C,
+Taglist 插件支持所有 exuberant ctags 工具所支持的编程语言,
+它包括以下编程语言: Assembly, ASP, Awk, Beta, C,
 C++, C#, Cobol, Eiffel, Erlang, Fortran, HTML, Java, Javascript, Lisp, Lua,
 Make, Pascal, Perl, PHP, Python, Rexx, Ruby, Scheme, Shell, Slang, SML, Sql,
 TCL, Verilog, Vim and Yacc.
 
-You can extend the taglist plugin to add support for new languages and also
-modify the support for the above listed languages.
+你可以扩展 taglist 插件去添加新编程语言支持
+也可以通过修改上面罗列的编程语言来添加.
 
-You should NOT make modifications to the taglist plugin script file to add
-support for new languages. You will lose these changes when you upgrade to the
-next version of the taglist plugin. Instead you should follow the below
-described instructions to extend the taglist plugin.
+你不要通过修改 taglist 插件的脚本文件来
+支持新的编程语言. 你更新到新版本的 taglist 插件时，这些更改将会丢失。
+相反，你应该遵循以下
+所描述的说明扩展 taglist 插件.
 
-You can extend the taglist plugin by setting variables in the .vimrc or _vimrc
-file. The name of these variables depends on the language name and is
-described below.
+你可以扩展 taglist 插件通过修改在 .vimrc 或者 _vimrc
+文件里的参数. 这些参数名称取决于编程语言的名字和
+下面描述.
 
-Modifying support for an existing language~
-To modify the support for an already supported language, you have to set the
-tlist_xxx_settings variable in the ~/.vimrc or $HOME/_vimrc file. Replace xxx
-with the Vim filetype name for the language file.  For example, to modify the
-support for the perl language files, you have to set the tlist_perl_settings
-variable. To modify the support for java files, you have to set the
-tlist_java_settings variable.
+对已支持编程语言进行修改~
+对已支持编程语言进行修改, 你必在 ~/.vimrc 或者 $HOME/_vimrc 文件里须设置
+tlist_xxx_settings 参数. 替换 xxx
+为编程语言在 Vim 里的文件类型.  举个例子, 
+要修改 perl 编程语言文件支持, 你必须设置 tlist_perl_settings
+参数. 你修改 java 文件支持时, 你必须设置 tlist_java_settings 
+参数.
 
-To determine the filetype name used by Vim for a file, use the following
-command in the buffer containing the file:
+想检测文件在 Vim 使用的文件类型名称, 
+在包含文件的缓冲区里使用以下命令:
 
 	:set filetype
 
-The above command will display the Vim filetype for the current buffer.
+上述命令会显示当前缓冲区文件在 Vim 的文件类型.
 
-The format of the value set in the tlist_xxx_settings variable is
+tlist_xxx_settings 参数可设置的值格式 如下
 
     <language_name>;flag1:name1;flag2:name2;flag3:name3
 
-The different fields in the value are separated by the ';' character.
+不同字段(filed) 用 ';' 号分开.
 
-The first field 'language_name' is the name used by exuberant ctags to refer
-to this language file. This name can be different from the file type name used
-by Vim. For example, for C++, the language name used by ctags is 'c++' but the
-filetype name used by Vim is 'cpp'. To get the list of language names
-supported by exuberant ctags, use the following command:
+第一个字段(field) 'language_name' 是 exuberant ctags 使用的
+某类编程语言文件的名称. 这个名称可能与 Vim 使用的文件类型的名称
+不同. 举个例子, 对于 C++, 这个编程语言名称在 ctags is 'c++' 但
+在 Vim 文件类型名称是 'cpp'. 获取  exuberant ctags　支持的
+编程语言文件列表, 使用以下命令:
 
 	$ ctags --list-maps=all
 
-The remaining fields follow the format "flag:name". The sub-field 'flag' is
-the language specific flag used by exuberant ctags to generate the
-corresponding tags. For example, for the C language, to list only the
-functions, the 'f' flag is used. To get the list of flags supported by
-exuberant ctags for the various languages use the following command:
+余下的字段(fields) 遵循格式 "flag:name". 其中的
+子字段 'flag' 是语言文件特殊的标记用于给 
+exuberant ctags 生成相对应的 tags. 举个例子, 对于 C 语言,
+只列出函数, 使用 'f' 标记. 罗列出不同编程语言由 exuberant ctags 
+工具所支持的特殊标记，使用以下命令:
 
 	$ ctags --list-kinds=all
 
-The sub-field 'name' specifies the title text to use for displaying the tags
-of a particular type. For example, 'name' can be set to 'functions'. This
-field can be set to any text string name.
+子字段 'name' 指定标题文本 用于显示 
+特定类型的 tags . 
+举个例子, 'name' 可以设为 'functions'. 这个
+字段可以设为任意文本字符串.
 
-For example, to list only the classes and functions defined in a C++ language
-file, add the following line to your .vimrc file:
+举个例子, 只列出定义在一个 C++ 语言文件里的类和函数
+添加以下命令行到你的 .vimrc 文件里:
 
 	let tlist_cpp_settings = 'c++;c:class;f:function'
 
-In the above setting, 'cpp' is the Vim filetype name and 'c++' is the name
-used by the exuberant ctags tool. 'c' and 'f' are the flags passed to
-exuberant ctags to list C++ classes and functions and 'class' is the title
-used for the class tags and 'function' is the title used for the function tags
-in the taglist window.
+在上面的设置中, 'cpp' Vim 文件类型名称而 'c++' 是
+exuberant ctags 工具使用的语言名称. 'c' 和 'f' 是特殊标记传递给
+exuberant ctags 列出 C++ 的类和函数， 'class' 是用于给
+类 tags 在 taglist 窗口里显示的标题 而 'function' 是用于
+给函数 tags 在 taglist 窗口里显示标题
 
-For example, to display only functions defined in a C file and to use "My
-Functions" as the title for the function tags, use
+举个例子, 只显示定义在一个 C 文件里的函数并使用 "My
+Functions" 作为函数 tags 标题 , 使用
 
 	let tlist_c_settings = 'c;f:My Functions'
 
-When you set the tlist_xxx_settings variable, you will override the default
-setting used by the taglist plugin for the 'xxx' language. You cannot add to
-the default options used by the taglist plugin for a particular file type. To
-add to the options used by the taglist plugin for a language, copy the option
-values from the taglist plugin file to your .vimrc file and modify it.
+当你设置 tlist_xxx_settings 参数后, 你将会覆盖 taglist 插件
+对于 'xxx' 语言默认设置. 你不可以添加针对一种特定文件类型
+默认选项到 taglist 插件 . 添加针对一种编程语言的选项到
+taglist 插件, 从 taglist 插件文件复制这些选项的值
+到你的 .vimrc 并修改它.
 
-Adding support for a new language~
-If you want to add support for a new language to the taglist plugin, you need
-to first extend the exuberant ctags tool. For more information about extending
-exuberant ctags, visit the following page:
+为新的编程语言添加支持~
+如果你想添加一种新的编程语言支持到 taglist 插件, 你首先须要
+扩展 exuberant ctags 工具. 获取更多关于扩展 exuberant ctags 的
+信息, 浏览以下网页:
 
     http://ctags.sourceforge.net/EXTENDING.html
 
-To add support for a new language, set the tlist_xxx_settings variable in the
-~/.vimrc file appropriately as described above. Replace 'xxx' in the variable
-name with the Vim filetype name for the new language.
+添加一种新的编程语言, 如上描述那样合适地 设置~/.vimrc 文件里的
+ tlist_xxx_settings 参数. 替换参数里的 'xxx' 为
+新语言在 Vim 里的文件类型名称.
 
-For example, to extend the taglist plugin to support the latex language, you
-can use the following line (assuming, you have already extended exuberant
-ctags to support the latex language):
+举个例子,扩展 taglist 插件去支持 latex 语言, 你可以
+使用以下命令行 (假设, 你已经扩展 exuberant
+ctags 支持 latex 语言):
 
 	let tlist_tex_settings='latex;b:bibitem;c:command;l:label'
 
-With the above line, when you edit files of filetype "tex" in Vim, the taglist
-plugin will invoke the exuberant ctags tool passing the "latex" filetype and
-the flags b, c and l to generate the tags. The text heading 'bibitem',
-'command' and 'label' will be used in the taglist window for the tags which
-are generated for the flags b, c and l respectively.
+使用上面的命令行, 当你在 Vim 里编辑文件类型为 "tex" 的文件时, taglist
+插件会调用 exuberant ctags 工具，并传递 "latex" 文件类型和
+特殊标记 b, c 和 l 给它去生成 tags. 文本标题 'bibitem',
+'command' 和 'label' 会分别在 taglist 窗口里归类显示 
+通过特殊标记 b, c 和 l 生成的 tags  .
 
 ==============================================================================
 						*taglist-faq*
@@ -1387,21 +1371,22 @@ are generated for the flags b, c and l respectively.
     的错误信息。为了修复这个问题，可以把 exuberant ctags 工具的路径加到系统的
     环境变量中或者设置 'Tlist_Ctags_Cmd' 这个变量。
 
-Q. A file has more than one tag with the same name. When I select a tag name
-   from the taglist window, the cursor is positioned at the incorrect tag
-   location.
-A. The taglist plugin uses the search pattern generated by the exuberant ctags
-   utility to position the cursor at the location of a tag definition. If a
-   file has more than one tag with the same name and same prototype, then the
-   search pattern will be the same. In this case, when searching for the tag
-   pattern, the cursor may be positioned at the incorrect location.
+问. 文件含有超过一个相同名称的 tag. 当我在
+    taglist 窗口里选择其中一个 tag 时, 光标没有定位到
+    这个 tag 所在的位置上 
+   
+答. taglist 插件 使用的搜索模板是用 exuberant ctags
+   生成的并用于将光标定位到 tag 所指定的位置. 如果一个
+   文件有多个使用相同名称和相同原型结构的 tag , 那么
+   搜索模板也是相同的. 也正因为如此, 使用这个搜索模板
+   搜索定位 tag 时, 光标就可能定位到错误的位置.
 
-Q. I have made some modifications to my file and introduced new
-   functions/classes/variables. I have not yet saved my file. The taglist
-   plugin is not displaying the new tags when I update the taglist window.
-A. The exuberant ctags utility will process only files that are present in the
-   disk. To list the tags defined in a file, you have to save the file and
-   then update the taglist window.
+问. 我已经修改过我的文件并添加了新的
+   作用/类/参数. 我还没有保存我的文件.当我更新 taglist 窗口时 
+   Taglist 插件并没有显示这些新的 tags .
+答. exuberant ctags 只处理已经保存在磁盘的
+   文件. 列出在文件定义的 tags , 你必须保存文件后
+   再更新 taglist 窗口.
 
 问：我已经使用 exuberant ctags 工具为我的源代码树产生了 ctags 文件。我如何设置
     taglist 插件来使用这个 tags 文件。
@@ -1433,16 +1418,17 @@ software.
 						*taglist-todo*
 12. 待办事项~
 
-1. Group tags according to the scope and display them. For example,
+1. Group tags according to the scope and display them. 举个例子,
    group all the tags belonging to a C++/Java class
-2. Support for displaying tags in a modified (not-yet-saved) file.
-3. Automatically open the taglist window only for selected filetypes.
-   For other filetypes, close the taglist window.
-4. When using the shell from the MKS toolkit, the taglist plugin
+2. 支持（动态）显示 tags 在一个修改(未保存)的文件.
+3. 只能在已选定的文件类型自动打开 taglist 窗口.
+   对于其它类型, 关闭 taglist 窗口.
+4. When using the shell from the MKS toolkit, the taglist 插件
    doesn't work.
-5. The taglist plugin doesn't work with files edited remotely using the
-   netrw plugin. The exuberant ctags utility cannot process files over
-   scp/rcp/ftp, etc.
+5. Taglist 插件不能在 通过 netrw 插件远程编辑的文件上工作。
+   exuberant ctags utility 不能通过 scp/rcp/ftp, etc 协议
+   处理文件
+   
 
 ==============================================================================
 
